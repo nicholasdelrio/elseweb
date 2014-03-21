@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <display-name>SADI Transformation Services for ELSEWeb</display-name>
+  <description></description>
+
+  <servlet>
+  	<servlet-name>InputWCSDatasetMatcher</servlet-name>
+  	<servlet-class>edu.utep.cybershare.elseweb.services.specification.InputWCSDatasetMatcher</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LayerContextualizer</servlet-name>
+  	<servlet-class>edu.utep.cybershare.elseweb.services.context.LayerContextualizer</servlet-class>
+  </servlet>
+   <servlet>
+  	<servlet-name>ScenarioContextualizer</servlet-name>
+  	<servlet-class>edu.utep.cybershare.elseweb.services.context.ScenarioContextualizer</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>WCSResponseExtractor</servlet-name>
+    <servlet-class>edu.utep.cybershare.elseweb.services.ogc.wcs.multipart.WCSResponseExtractor</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>WCSExecutor</servlet-name>
+    <servlet-class>edu.utep.cybershare.elseweb.services.ogc.wcs.execution.WCSExecutor</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>InputWCSDatasetMatcher</servlet-name>
+    <url-pattern>/InputWCSDatasetMatcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ScenarioContextualizer</servlet-name>
+    <url-pattern>/ScenarioContextualizer</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LayerContextualizer</servlet-name>
+    <url-pattern>/LayerContextualizer</url-pattern>
+  </servlet-mapping>   
+  <servlet-mapping>
+    <servlet-name>WCSResponseExtractor</servlet-name>
+    <url-pattern>/WCSResponseExtractor</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>WCSExecutor</servlet-name>
+    <url-pattern>/WCSExecutor</url-pattern>
+  </servlet-mapping>
+
+</web-app>

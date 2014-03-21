@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#"
+     xml:base="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl">
+        <owl:imports rdf:resource="http://www.w3.org/ns/prov-o#"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#hadInput -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#hadInput">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#used"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#wasInvokedBy -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#wasInvokedBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasInformedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#wasOutputBy -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#wasOutputBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#hasQueryText -->
+
+    <owl:DatatypeProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#hasQueryText"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#CardioSHAREActivity -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#CardioSHAREActivity">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#ELSEWebUser -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#ELSEWebUser">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#ExecuteQueryPlanActivity -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#ExecuteQueryPlanActivity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#used"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREQueryPlan"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasAssociatedWith"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanExecutor"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasInformedBy"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#GenerateQueryPlanActivity"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#CardioSHAREActivity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#GenerateQueryPlanActivity -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#GenerateQueryPlanActivity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#used"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SPARQLQuery"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasAssociatedWith"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanner"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#CardioSHAREActivity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#InvokeSADIServiceActivity -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#InvokeSADIServiceActivity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#wasInvokedBy"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#ExecuteQueryPlanActivity"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasAssociatedWith"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanExecutor"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#CardioSHAREActivity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#QueryPlanAssociation -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#QueryPlanAssociation">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#agent"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanExecutor"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#hadPlan"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREQueryPlan"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Association"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIService -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIService">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceExecutionActivity -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceExecutionActivity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#hadInput"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceInput"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#wasInvokedBy"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#InvokeSADIServiceActivity"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceInput -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceInput">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceOutput -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceOutput">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#wasOutputBy"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SADIServiceExecutionActivity"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanExecutor -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanExecutor">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanner -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREClientQueryPlanner">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREQueryPlan -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SHAREQueryPlan">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#GenerateQueryPlanActivity"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Plan"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SPARQLQuery -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#SPARQLQuery">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasAttributedTo"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#ELSEWebUser"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-service.owl#hasQueryText"/>
+                        <owl:someValuesFrom rdf:resource="&rdfs;Literal"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

@@ -1,0 +1,17 @@
+prefix lm: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-lifemapper.owl#>
+
+select distinct ?url ?result
+from <http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.owl>
+where
+{
+	?jsonSpec a lm:JSONExperimentSpecification .
+	?jsonSpec lm:hasInputWCSDataset
+			[lm:hasWCSResponse
+				[lm:hasExtractedPayload
+					[lm:hasPublishedLayer
+						[lm:isScenarioLayerOf
+							[lm:hasPublishedScenario
+								[lm:isModellingScenarioOf
+									[lm:hasExperimentResult ?result]]]]]]].
+	?result lm:hasExperimentResultURL ?url
+}

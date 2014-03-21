@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://www.ngdc.noaa.gov/metadata/published/xsd/ngdcSchema/schema.xsd">
+   <idinfo>
+      <datsetid>9c014ac4-e196-489d-b57a-f652d5e197e5</datsetid>
+      <citation>
+         <citeinfo>
+            <origin>The PRISM Climate Group at Oregon State University.</origin>
+            <pubdate>20000331</pubdate>
+            <title>PRISM Precipitation Normals (March/1971-2000)</title>
+            <geoform>remote-sensing image</geoform>
+            <pubinfo>
+               <pubplace>Corvallis, Oregon, USA</pubplace>
+               <publish>The PRISM Climate Group at Oregon State University.</publish>
+            </pubinfo>
+            <onlink>http://gstore.unm.edu/apps/epscor/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/services/ogc/wms?SERVICE=wms&amp;REQUEST=GetCapabilities&amp;VERSION=1.1.1</onlink>
+            <onlink>http://gstore.unm.edu/apps/epscor/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/services/ogc/wcs?SERVICE=wcs&amp;REQUEST=GetCapabilities&amp;VERSION=1.1.2</onlink>
+            <onlink>http://gstore.unm.edu/apps/epscor/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/us_ppt_1971_2000_03.original.tif</onlink>
+            <onlink>http://gstore.unm.edu/apps/epscor/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/metadata/FGDC-STD-012-2002.xml</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/services/ogc/wms?SERVICE=wms&amp;REQUEST=GetCapabilities&amp;VERSION=1.1.1</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/services/ogc/wcs?SERVICE=wcs&amp;REQUEST=GetCapabilities&amp;VERSION=1.1.2</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/us_ppt_1971_2000_03.original.tif</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/metadata/FGDC-STD-012-2002.xml</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/metadata/FGDC-STD-012-2002.html</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/metadata/ISO-19119:WMS.xml</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/metadata/ISO-19115:2003.xml</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/metadata/ISO-19115:2003.html</onlink>
+            <onlink>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/metadata/ISO-19119:WCS.xml</onlink>
+         </citeinfo>
+      </citation>
+      <descript>
+         <abstract>This data set contains spatially gridded average monthly and annual
+				precipitation for the climatological period 1971-2000. Distribution of the point
+				measurements to a spatial grid was accomplished using the PRISM model, developed and
+				applied by Chris Daly of the PRISM Climate Group at Oregon State
+				University.</abstract>
+         <purpose>Display and/or analyses requiring spatially distributed monthly or annual
+				precipitation for the climatological period 1971-2000.</purpose>
+         <supplinf>There are many methods of interpolating climate from monitoring stations to
+				grid points. Some provide estimates of acceptable accuracy in flat terrain, but few
+				have been able to adequately explain the extreme, complex variations in climate that
+				occur in mountainous regions. Significant progress in this area has been achieved
+				through the development of PRISM (Parameter-elevation Regressions on Independent
+				Slopes Model). PRISM is an analytical model that uses point data and an underlying
+				grid such as a digital elevation model (DEM) or a 30 yr climatological average (e.g.
+				1971- 2000 average) to generate gridded estimates of monthly and annual
+				precipitation and temperature (as well as other climatic parameters). PRISM is well
+				suited to regions with mountainous terrain, because it incorporates a conceptual
+				framework that addresses the spatial scale and pattern of orographic processes.
+				Grids were modeled on a monthly basis. Annual grids of temperature are produced by
+				averaging the monthly grids, and summing for precipitation.</supplinf>
+      </descript>
+      <timeperd>
+         <timeinfo>
+            <rngdates>
+               <begdate>19710301</begdate>
+               <enddate>20000331</enddate>
+            </rngdates>
+         </timeinfo>
+         <current>Climatological period from which the point observations were taken.</current>
+      </timeperd>
+      <status>
+         <progress>Complete</progress>
+         <update>As needed</update>
+      </status>
+      <spdom>
+         <bounding>
+            <westbc>-125.020679</westbc>
+            <eastbc>-66.479012</eastbc>
+            <northbc>49.937530</northbc>
+            <southbc>24.062530</southbc>
+         </bounding>
+      </spdom>
+      <keywords>
+         <theme>
+            <themekt>ISO 19115 Topic Categories</themekt>
+            <themekey>climatologyMeteorologyAtmosphere</themekey>
+         </theme>
+         <theme>
+            <themekt>CF</themekt>
+            <themekey>precipitation_amount</themekey>
+         </theme>
+         <theme>
+            <themekt>None</themekt>
+            <themekey>Prism</themekey>
+            <themekey>precipitation</themekey>
+         </theme>
+         <place>
+            <placekt>Spatial Reference System Identifiers</placekt>
+            <placekey>EPSG:4326</placekey>
+            <placekey>EPSG:4326</placekey>
+         </place>
+         <place>
+            <placekt>None</placekt>
+            <placekey>United States</placekey>
+         </place>
+      </keywords>
+      <accconst>Gridded and polygon data, tabular and graphical data retrieved from the map
+			server, and all other data on this web site may be freely reproduced and distributed for
+			non-commercial purposes. When referring to the data, the source must be clearly and
+			prominently stated, and include at a minimum, our name, URL, and data of data creation,
+			for example: PRISM Climate Group, Oregon State University, http://prism.oregonstate.edu,
+			created 4 Feb 2004. Sale or other commercial use of the data must be arranged by
+			contacting the PRISM Climate Group. </accconst>
+      <useconst>Acknowledgement of the following agencies in products derived from these data: The
+			PRISM Climate Group at Oregon State University.</useconst>
+      <ptcontac>
+         <cntinfo>
+            <cntperp>
+               <cntper>Wayne Gibson</cntper>
+               <cntorg/>
+            </cntperp>
+            <cntaddr>
+               <addrtype>mailing address</addrtype>
+               <address>2001 Kelley Engineering Center</address>
+               <city>Corvallis</city>
+               <state>Oregon</state>
+               <postal>97331-2209</postal>
+               <country>USA</country>
+            </cntaddr>
+            <cntvoice>(541) 737-2531</cntvoice>
+            <cntemail>gibson@nacse.org</cntemail>
+         </cntinfo>
+      </ptcontac>
+      <native>Microsoft Windows Vista Version 6.1 (Build 7601) Service Pack 1; ESRI ArcCatalog
+			9.3.1.4000</native>
+   </idinfo>
+   <dataqual>
+      <logic>All data were based on the same averaging period (1971-2000). Similar quality
+			assurance procedures were used with all input data sets.</logic>
+      <complete>Point estimates of precipitation originated from some or all of the following
+			sources: 1) National Weather Service (NWS) Cooperative (COOP) stations, 2) Natural
+			Resources Conservation Service (NRCS) SNOTEL, 3) United States Forest Service (USFS) and
+			Bureau of Land Management (BLM) RAWS Stations, 4) Bureau of Reclemation (AGRIMET)
+			stations, 5) California Data Exchange Center (CDEC) stations, 6) Storage guages, 7) NRCS
+			Snowcourse stations, 8) Other State and local station networks, 9) Estimated station
+			data, 0) Canadian stations, 10) Upper air stations, and 11) NWS/Federal Aviation
+			Administration (FAA) Automated surface observation stations (ASOS). All COOP station
+			data were subjected to quality control checks by the National Climatic Data Center
+			(NCDC). All COOP, SNOTEL and other data were subjected to further quality control checks
+			by the PRISM Climate Group.</complete>
+      <posacc>
+         <horizpa>
+            <horizpar>Accuracy of this data set is based on the original specification of the
+					Defense Mapping Agency (DMA) 1 degree digital elevation models (DEM). The stated
+					accuracy of the original DEMs are 130 m circular error with 90%
+					probability.</horizpar>
+            <qhorizpa>
+               <horizpav>90</horizpav>
+               <horizpae>The broad DMA production objective for 1-degree DEM's.</horizpae>
+            </qhorizpa>
+         </horizpa>
+      </posacc>
+      <lineage>
+         <srcinfo>
+            <srccite>
+               <citeinfo>
+                  <origin>National Climatic Data Center (NCDC)</origin>
+                  <pubdate>2006</pubdate>
+                  <title>United States Summary of the Day Cooperative, (DSI-3200)</title>
+                  <pubinfo>
+                     <pubplace>Asheville, NC, USA</pubplace>
+                     <publish>National Climatic Data Center (NCDC)</publish>
+                  </pubinfo>
+               </citeinfo>
+            </srccite>
+            <typesrc>digital files</typesrc>
+            <srctime>
+               <timeinfo>
+                  <rngdates>
+                     <begdate>19710301</begdate>
+                     <enddate>20000331</enddate>
+                  </rngdates>
+               </timeinfo>
+               <srccurr>ground condition</srccurr>
+            </srctime>
+            <srccitea>DSI3200</srccitea>
+            <srccontr>Location and values of known average monthly and annual
+					precipitation</srccontr>
+         </srcinfo>
+         <procstep>
+            <procdesc>Files were downloaded from the National Climatic Data Center in their
+					native ascii format and reprojected to a byte type geotiff in WGS84. The GDAL
+					(Geospatial Data Abstraction Library) gdalwarp utility was used for both
+					reprojection and file format transformation.</procdesc>
+            <procdate>20130419</procdate>
+            <proccont>
+               <cntinfo>
+                  <cntorgp>
+                     <cntorg>Earth Data Analysis Center</cntorg>
+                  </cntorgp>
+                  <cntpos>Clearinghouse Manager</cntpos>
+                  <cntaddr>
+                     <addrtype>mailing and physical</addrtype>
+                     <address>MSC01 1110, Bandelier West Room 118</address>
+                     <address>1 University of New Mexico</address>
+                     <city>Albuquerque</city>
+                     <state>NM</state>
+                     <postal>87131-0001</postal>
+                     <country>US</country>
+                  </cntaddr>
+                  <cntvoice>505-277-3622 ext. 230</cntvoice>
+                  <cntfax>505-277-3614</cntfax>
+                  <cntemail>clearinghouse@edac.unm.edu</cntemail>
+                  <hours>8:00 am - 5:00 pm MT, M-F</hours>
+               </cntinfo>
+            </proccont>
+         </procstep>
+      </lineage>
+   </dataqual>
+   <spdoinfo>
+      <indspref>United States</indspref>
+      <direct>Raster</direct>
+      <rastinfo>
+         <cvaltype>8-bit unsigned integer</cvaltype>
+         <rasttype>Pixel</rasttype>
+         <rowcount>3105</rowcount>
+         <colcount>7025</colcount>
+         <vrtcount>1</vrtcount>
+      </rastinfo>
+   </spdoinfo>
+   <spref>
+      <horizsys>
+         <geograph>
+            <latres>0.00000001</latres>
+            <longres>0.00000001</longres>
+            <geogunit>Decimal degrees</geogunit>
+         </geograph>
+         <geodetic>
+                <horizdn>D_WGS_1984</horizdn>
+                <ellips>WGS_1984</ellips>
+                <semiaxis>6378137.000000</semiaxis>
+                <denflat>298.257224</denflat>
+            </geodetic>
+      </horizsys>
+   </spref>
+   <eainfo>
+      <detailed>
+         <enttyp>
+            <enttypl>average precipitation grid cell value</enttypl>
+            <enttypd>ASCII values</enttypd>
+            <enttypds>Self-evident</enttypds>
+         </enttyp>
+         <attr>
+            <attrlabl>Value</attrlabl>
+            <attrdef>spatially gridded average precipitation values</attrdef>
+            <attrdefs>Daly, C., W. P. Gibson, G.H. Taylor, G. L. Johnson, P. Pasteris. 2002. A
+					knowledge-based approach to the statistical mapping of climate. Climate
+					Research, 22, 99-113, 2002</attrdefs>
+            <attrdomv>
+               <rdom>
+                  <rdommin>5159</rdommin>
+                  <rdommax>717628</rdommax>
+                  <attrunit>Millimeters times 100</attrunit>
+               </rdom>
+            </attrdomv>
+         </attr>
+      </detailed>
+   </eainfo>
+   <distinfo>
+      <distrib>
+         <cntinfo>
+            <cntorgp>
+               <cntorg>Earth Data Analysis Center</cntorg>
+            </cntorgp>
+            <cntpos>Clearinghouse Manager</cntpos>
+            <cntaddr>
+               <addrtype>mailing and physical address</addrtype>
+               <address>MSC01 1110</address>
+               <address>1 University of New Mexico</address>
+               <city>Albuquerque</city>
+               <state>NM</state>
+               <postal>87131-0001</postal>
+               <country>USA</country>
+            </cntaddr>
+            <cntvoice>505-277-3622 ext. 230</cntvoice>
+            <cntfax>505-277-3614</cntfax>
+            <cntemail>clearinghouse@edac.unm.edu</cntemail>
+            <hours>0800 - 1700 MT, M-F -7 hours GMT</hours>
+         </cntinfo>
+      </distrib>
+      <resdesc>Downloadable Data</resdesc>
+      <distliab>The material on this site is made available as a public service. Maps and data are to be used for reference purposes only and the Earth Data Analysis Center (EDAC), NASA ElseWeb (UTEP, KU, UNM) and The University of New Mexico are not responsible for any inaccuracies herein contained. No responsibility is assumed for damages or other liabilities due to the accuracy, availability, use or misuse of the information herein provided. Unless otherwise indicated in the documentation (metadata) for individual data sets, information on this site is public domain and may be copied without permission; citation of the source is appreciated.</distliab>
+      <stdorder>
+         <digform>
+            <digtinfo>
+               <formname>Tagged Image File Format (TIFF)</formname>
+               <transize>42</transize>
+            </digtinfo>
+            <digtopt>
+               <onlinopt>
+                  <computer>
+                     <networka>
+                        <networkr>http://gstore.unm.edu/apps/elseweb/datasets/9c014ac4-e196-489d-b57a-f652d5e197e5/us_ppt_1971_2000_03.original.tif</networkr>
+                     </networka>
+                  </computer>
+                  <accinstr>Download from NASA ElseWeb (UTEP, KU, UNM) at http://cybershare.utep.edu/projects/elseweb.</accinstr>
+               </onlinopt>
+            </digtopt>
+         </digform>
+         <fees>None. The files are available to download from NASA ElseWeb (UTEP, KU, UNM) (http://cybershare.utep.edu/projects/elseweb).</fees>
+         <ordering>Contact Earth Data Analysis Center at clearinghouse@edac.unm.edu</ordering>
+      </stdorder>
+      <custom>Contact Earth Data Analysis Center at clearinghouse@edac.unm.edu</custom>
+      <techpreq>Adequate computer capability is the only technical prerequisite for viewing data in digital form.</techpreq>
+   </distinfo>
+   <metainfo>
+      <metd>20130928</metd>
+      <metc>
+         <cntinfo>
+            <cntorgp>
+               <cntorg>Earth Data Analysis Center</cntorg>
+            </cntorgp>
+            <cntpos>Clearinghouse Manager</cntpos>
+            <cntaddr>
+               <addrtype>mailing and physical address</addrtype>
+               <address>MSC01 1110</address>
+               <address>1 University of New Mexico</address>
+               <city>Albuquerque</city>
+               <state>NM</state>
+               <postal>87131-0001</postal>
+               <country>USA</country>
+            </cntaddr>
+            <cntvoice>505-277-3622 ext. 230</cntvoice>
+            <cntfax>505-277-3614</cntfax>
+            <cntemail>clearinghouse@edac.unm.edu</cntemail>
+            <hours>0800 - 1700 MT, M-F -7 hours GMT</hours>
+         </cntinfo>
+      </metc>
+      <metstdn>FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+      <metstdv>FGDC-STD-001-1998</metstdv>
+      <mettc>local time</mettc>
+      <metextns>
+         <onlink>http://www.fgdc.gov/standards/projects/FGDC-standards-projects/csdgm_rs_ex/MetadataRemoteSensingExtens.pdf</onlink>
+         <metprof>Extensions for Remote Sensing Metadata, FGDC-STD-012-2002</metprof>
+      </metextns>
+   </metainfo>
+</metadata>

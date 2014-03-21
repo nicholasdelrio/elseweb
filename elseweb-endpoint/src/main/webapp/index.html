@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ELSEWeb Experiment Specification Submission</title>
+</head>
+<body>
+<p>You have accessed the <a href="http://elseweb.cybershare.utep.edu/">ELSEWeb Project</a> experiment endpoint.</p>
+
+<p><b>Input:</b></p>
+<p>Please post an input JSON specification, like the one shown below, to: <a href="./JSONSpecification">JSONSpecification Submission Service</a>. The JSON contents should be bound to the <b>jsonSpec</b> parameter.</p>
+
+<pre>
+{"specification": {
+    "id": "d046d1fa-98cc-4705-b44d-884c263bbcfa",
+    "occurrenceDataID": "1032789",
+    "algorithm": {
+        "id": "ANN",
+        "parameterBindings": [
+            {"name": "Choice", "value": "1", "datatype": "integer"},
+            {"name": "Epoch", "value": "5000000", "datatype": "integer"},
+            {"name": "HiddenLayerNeurons", "value": "14", "datatype": "integer"},
+            {"name": "LearningRate", "value": "0.3", "datatype": "double"},
+            {"name": "MinimumError", "value": "0.01", "datatype": "double"},
+            {"name": "Momentum", "value": "0.05", "datatype": "double"}         
+            ]
+    },
+    "modelingScenario": [
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348880"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348881"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348882"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348883"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348884"}
+        ]
+    }
+}
+</pre>
+
+<p>This JSON file is accessible : <a href="http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json">here</a>.</p>
+
+<p><b>Output:</b></p>
+<p>Upon a successful submission, you will receive:</p>
+<pre>
+{"executedSpecification": {
+    "successful": "true",
+    "experimentResult": {
+        "resultURI": "http://visko.cybershare.utep.edu/linked-data/elseweb/sadi/experimentResult-ef92ec6c-fffe-444d-b052-ff99ac5fe358",
+        "resultURL": "http://lifemapper.org/services/sdm/experiments/999951"
+        }
+    }
+}
+</pre>
+
+<p>Upon failure, you will receive:</p>
+<pre>
+{"executedSpecification": {
+    "successful": "false",
+    "experimentResult": {
+        "resultURI": "some error message",
+        "resultURL": "some error message"
+        }
+    }
+}
+</pre>
+
+</body>
+</html>

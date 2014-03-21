@@ -1,0 +1,1 @@
+Directory for storing transformed payload TIFF data.

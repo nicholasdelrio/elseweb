@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#"
+     xml:base="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#behaviorControlledBy -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#behaviorControlledBy"/>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#controlsBehaviorOf -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#controlsBehaviorOf"/>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterMember -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterMember"/>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#implementedIn -->
+
+    <owl:ObjectProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#implementedIn"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#boundToValue -->
+
+    <owl:DatatypeProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#boundToValue"/>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasAlgorithmName -->
+
+    <owl:DatatypeProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasAlgorithmName"/>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterName -->
+
+    <owl:DatatypeProperty rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterName"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingAlgorithm -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingAlgorithm">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#behaviorControlledBy"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameters"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#implementedIn"/>
+                        <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingSoftware"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasAlgorithmName"/>
+                        <owl:someValuesFrom rdf:resource="&rdfs;Literal"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameter -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameter">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#boundToValue"/>
+                        <owl:someValuesFrom rdf:resource="&rdfs;Literal"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterName"/>
+                        <owl:someValuesFrom rdf:resource="&rdfs;Literal"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameters -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameters">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#hasParameterMember"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameter"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingSoftware -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingSoftware"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

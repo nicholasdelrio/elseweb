@@ -1,0 +1,15 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-data.owl#"
+    xmlns:j.1="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-lifemapper.owl#">
+    <j.1:TIFFDataset rdf:about="http://visko.cybershare.utep.edu/linked-data/elseweb/sadi/tiffDataset">
+      <j.0:hasManifestation>
+        <j.1:TIFFManifestation rdf:about="http://visko.cybershare.utep.edu/linked-data/elseweb/sadi/manifestation">
+          <j.0:hasFileDownloadURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/layers/payload.tif</j.0:hasFileDownloadURL>
+        </j.1:TIFFManifestation>
+      </j.0:hasManifestation>
+      <j.1:hasTypeCode rdf:datatype="http://www.w3.org/2001/XMLSchema#long">4</j.1:hasTypeCode>
+      <j.1:hasLayerUnits rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dd</j.1:hasLayerUnits>
+      <j.1:hasJSONExperimentSpecificationURL>http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json</j.1:hasJSONExperimentSpecificationURL>
+    </j.1:TIFFDataset>
+</rdf:RDF>
