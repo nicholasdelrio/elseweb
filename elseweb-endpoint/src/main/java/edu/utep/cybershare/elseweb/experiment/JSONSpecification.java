@@ -45,11 +45,16 @@ public class JSONSpecification extends HttpServlet {
 	String jsonSpecificationString = request.getParameter("jsonSpec");
 		
 		if(jsonSpecificationString != null){
+
+			System.out.println("got JSON input:");
+			System.out.println(jsonSpecificationString);
 			// Build the specification
 			edu.utep.cybershare.elseweb.experiment.json.JSONSpecification jsonSpecification = new edu.utep.cybershare.elseweb.experiment.json.JSONSpecification(jsonSpecificationString);
 			
-			if(!jsonSpecification.isValid())
+			if(!jsonSpecification.isValid()){
+				System.out.println("JSON is not valid!!!!");
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			}
 			else{
 				try{
 					// Build the specification
@@ -72,6 +77,7 @@ public class JSONSpecification extends HttpServlet {
 			}
 		}
 		else{
+			System.out.println("send bad request error since jsonSpec was null!");
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
