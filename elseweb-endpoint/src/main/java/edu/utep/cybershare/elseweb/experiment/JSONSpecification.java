@@ -31,15 +31,18 @@ public class JSONSpecification extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
-		response.getWriter().write(this.getUsageMessage());
+		this.runExperiment(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String jsonSpecificationString = request.getParameter("jsonSpec");
+		this.runExperiment(request, response);
+	}
+	
+	private void runExperiment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	String jsonSpecificationString = request.getParameter("jsonSpec");
 		
 		if(jsonSpecificationString != null){
 			// Build the specification
