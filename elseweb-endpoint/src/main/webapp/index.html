@@ -5,10 +5,21 @@
 <title>ELSEWeb Experiment Specification Submission</title>
 </head>
 <body>
+
 <p>You have accessed the <a href="http://elseweb.cybershare.utep.edu/">ELSEWeb Project</a> experiment endpoint.</p>
 
-<p><b>Input:</b></p>
-<p>Please post an input JSON specification, like the one shown below, to: <a href="./JSONSpecification">JSONSpecification Submission Service</a>. The JSON contents should be bound to the <b>jsonSpec</b> parameter.</p>
+<p>Please submit your ELSEWeb experiment specification in the text box below. An example specification can be found below.</p>
+
+	<form id="form1" name="form1" method="post" action="./JSONSpecification.php">
+		<textarea name="text" id="textarea" cols="100" rows="25"></textarea>
+		<br>
+		<input type="submit" name="button" id="button" value="Run Experiment" />
+	</form>
+
+<p>Alternatively, you can POST experiment specifications to the <a href="./JSONSpecification">JSONSpecification Submission Service</a>. Specifications posted to the JSONSpecification submission service should be bound to the <b>jsonSpec</b> parameter.</p>
+
+<p><b>Example Input:</b></p>
+<p>The example JSON files show below is accessible : <a href="http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json">here</a>.</p>
 
 <pre>
 {"specification": {
@@ -36,9 +47,7 @@
 }
 </pre>
 
-<p>This JSON file is accessible : <a href="http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json">here</a>.</p>
-
-<p><b>Output:</b></p>
+<p><b>Example Output:</b></p>
 <p>Upon a successful submission, you will receive:</p>
 <pre>
 {"executedSpecification": {

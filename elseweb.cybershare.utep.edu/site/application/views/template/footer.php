@@ -10,7 +10,7 @@
                         <p>Email : <a href="javascript:;">ndel2@utep.edu</a></p>
                     </address>
                 </div>
-<!--                <div class="col-lg-5 col-sm-5">
+<!--            <div class="col-lg-5 col-sm-5">
                     <h1>latest tweet</h1>
                     <div class="tweet-box">
                         <i class="icon-twitter"></i>

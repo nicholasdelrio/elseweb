@@ -11,10 +11,10 @@
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
                         <li class="<?php echo isActive($pageName,"home")?>"><a href="<?php echo site_url('home') ?>">Home</a></li>
-                        <li class="<?php echo isActive($pageName,"about")?>"><a href="<?php echo site_url('about') ?>">Experiments</a></li>
+                        <li class="<?php echo isActive($pageName,"experiments")?>"><a href="<?php echo site_url('experiments') ?>">Experiments</a></li>
                         <li class="<?php echo isActive($pageName,"ontologies")?>"><a href="<?php echo site_url('ontologies') ?>">Ontologies</a></li>
-                        <li class="<?php echo isActive($pageName,"about")?>"><a href="<?php echo site_url('about') ?>">Services</a></li>
-                        <li class="<?php echo isActive($pageName,"about")?>"><a href="<?php echo site_url('about') ?>">Publications</a></li>
+                        <li class="<?php echo isActive($pageName,"team")?>"><a href="<?php echo site_url('team') ?>">Team</a></li>          
+                        <li class="<?php echo isActive($pageName,"publications")?>"><a href="<?php echo site_url('publications') ?>">Publications</a></li>
 
                         <!--
                         <li class="dropdown ">

@@ -1,62 +1,8 @@
-<!--breadcrumbs start-->
-    <!--<div class="breadcrumbs">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-sm-4">
-                    <h1>About us</h1>
-                </div>
-                <div class="col-lg-8 col-sm-8">
-                    <ol class="breadcrumb pull-right">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li class="active">About</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>-->
-    <!--breadcrumbs end-->
-
     <!--container start-->
     <div class="container">
         <div class="row">
             <div class="col-lg-5">
                  <img width="470" src="<?php echo base_url(IMAGES."layered-ontologies.png");?>" alt="text img">
-                <!--
-                <div class="span5 about-carousel">
-                    <div id="myCarousel" class="carousel slide">
-                        <!-- Carousel items -->
-                        <!--<div class="carousel-inner">
-                            <div class="active item">
-                                <img src="<?php echo base_url(IMAGES."about_1.jpg");?>" alt="image">
-                                
-                                <div class="carousel-caption">
-                                    <p>Donec luctus ullamcorper nulla</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <img src="<?php echo base_url(IMAGES."about_2.jpg");?>" alt="image">
-                                <div class="carousel-caption">
-                                    <p>Blanditiis praesentium voluptatum</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <img src="<?php echo base_url(IMAGES."about_1.jpg");?>" alt="image">
-                                <div class="carousel-caption">
-                                    <p>Honest and amazing things that bring positive results</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Carousel nav -->
-                        <!--
-                        <a class="carousel-control left" href="#myCarousel" data-slide="prev">
-                            <i class="icon-angle-left"></i>
-                        </a>
-                        <a class="carousel-control right" href="#myCarousel" data-slide="next">
-                            <i class="icon-angle-right"></i>
-                        </a>
-                    </div>
-                </div>-->
             </div>
             <div class="col-lg-7 about">
                 <h3>A Multitier Ontology Driven Infrastructure</h3>
@@ -64,13 +10,10 @@
                 <p>The first tier of our ontology consists of prevalent Linked 0pen Data (LOD) ontologies that, in addition to providing a community driven structure to our data, allows other semantic applications to easily consume our RDF. The second tier expands on LOD ontologies and provides specific concepts for describing data provider sources and modeling services. The third tier is where the domain specific data and model providers would align with our generic ontologies, and provide classes and properties specific to their domain. Finally, the transformation tier provides a link between a specific data and model provider. SADI services leverage the transformation ontology to automatically transform source data into forms a specific modeling agent can process.</p>
             </div>
         </div>
+
         <div class="row">
             <div class="hiring">
                 <div class="col-lg-6 col-sm-6">
-                <!--
-                    <div class="icon-wrap ico-bg round">
-                        <i class="icon-desktop"></i>
-                    </div> -->
                     <div class="content">
                         <h3 class="title">ELSEWeb Data</h3>
                         <p>The <a href="<?php echo ONTPREFIX."elseweb-data.owl";?>">elseweb-data ontology</a> provides concepts for describing the spatial/temporal dimensions of a dataset, how it can be accessed, and the specific nature of the data being contained.</p>
@@ -78,16 +21,45 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-sm-6">
-                    <!-- <div class="icon-wrap ico-bg round">
-                        <i class="icon-user"></i>
-                    </div>-->
                     <div class="content">
                         <h3 class="title">ELSEWeb Model</h3>
-                        <p>The <a href="<?php echo ONTPREFIX."elseweb-modelling.owl";?>">elseweb-modelling</a> ontology provides concepts for describing the generic algorithms and how they relate to parameter sets and software agents that implements the algorithm.</p>
-                        <img width="470" src="<?php echo base_url(IMAGES."elseweb-modelling.png");?>" alt="text img">
+                        <p>The <a href="<?php echo ONTPREFIX."elseweb-modelling.owl";?>">elseweb-modelling</a> ontology provides concepts for describing generic algorithms and how they relate to parameter sets and software agents which serve as implementations.</p>
+                         <a href="<?php echo ONTPREFIX."elseweb-modelling.owl";?>"><img width="470" src="<?php echo base_url(IMAGES."elseweb-modelling.png");?>" alt="text img"></a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="hiring">
+                <div class="col-lg-6 col-sm-6">
+                    <div class="content">
+                        <h3 class="title">ELSEWeb EDAC</h3>
+                        <p>The <a href="<?php echo ONTPREFIX."elseweb-edac.owl";?>">elseweb-edac ontology</a> describes specific raster and vector datasets served by <a href="http://edac.unm.edu/">EDAC’s</a> large collection of Open Geospatial Consortium (OGC) web services. The ontology provides properties for attaching pointers to Web Coverage Service (WCS) Get-Capabilities documents as well as EDAC’s special condensed JSON capabilities representation. The <a href="<?php echo LODSPEAKR."instances/elseweb_edac:PublishedPRISMDataset";?>">environmental datasets</a> contained in this ontology were harvested from the <a href="http://gstore.unm.edu/">EDAC’s GSTORE</a>..</p>
+                         <a href="<?php echo ONTPREFIX."elseweb-edac.owl";?>"><img width="470" src="<?php echo base_url(IMAGES."elseweb-edac.png");?>" alt="text img"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                    <div class="content">
+                        <h3 class="title">ELSEWeb Lifemapper</h3>
+                        <p>The <a href="<?php echo ONTPREFIX."elseweb-lifemapper.owl";?>">elseweb-lifemapper</a> describes specific <a href="<?php echo LODSPEAKR."instances/elseweb_lifemapper:LifemapperAlgorithm";?>">modeling algorithms</a> supported by <a href="http://lifemapper.org">Lifemapper</a> as well as corresponding parameter sets. The parameter descriptions contain minimum and maximum “hasValue” property restrictions to define the legal ranges of values bound to specific parameters. This ontology also contains a collection of <a href="<?php echo LODSPEAKR."instances/elseweb_lifemapper:SpeciesOccurrenceDataset";?>">species occurrence data</a> that can be referenced in experiments.</p>
+                         <a href="<?php echo ONTPREFIX."elseweb-lifemapper.owl";?>"><img width="470" src="<?php echo base_url(IMAGES."elseweb-lifemapper.png");?>" alt="text img"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="text-center">
+                <div class="content">
+                    <h3 class="title">ELSEWeb EDAC to Lifemapper</h3>
+                    <p>The <a href="<?php echo ONTPREFIX."elseweb-lifemapper.owl";?>">edac-to-lifemapper ontology</a> describes the relationships between user experiment specifications and Lifemapper experiment specifications. Users experiment specifications reference resources such as EDAC WCS datasets, which Lifemapper is unable to directly process.  Lifemapper experiment specifications expect input data as “Posted TIFFs” and to be associated with posted “Scenarios”. Therefore, rounds of transformations must ensue before feeding EDAC data to Lifemapper. The edac-to-lifemapper ontology specifies the intermediate forms and how they relate from the source EDAC data and the required Lifemapper scenarios. From these intermediate form descriptions, tools such as <a href”http://sadiframework.org/content/tag/cardioshare/”>SADI SHARE client</a> can identify services that support the transformations of EDAC data to forms ingestible by Lifemapper.
+</p>
+                    <a href="<?php echo ONTPREFIX."elseweb-lifemapper.owl";?>"><img width="900" src="<?php echo base_url(IMAGES."edac-to-lifemapper.png");?>" alt="text img"></a>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!--container end-->
