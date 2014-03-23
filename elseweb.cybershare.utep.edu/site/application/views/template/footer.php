@@ -6,7 +6,7 @@
                     <h1>contact info</h1>
                     <address>
                         <p><a href="http://trust.utep.edu/members/nick">Nicholas Del Rio</a></p>
-                        <p>University of Texas at El Paso CYBER-ShARE Center</p>
+                        <p>University of Texas at El Paso CYBER-ShARE</p>
                         <p>Email : <a href="javascript:;">ndel2@utep.edu</a></p>
                     </address>
                 </div>
