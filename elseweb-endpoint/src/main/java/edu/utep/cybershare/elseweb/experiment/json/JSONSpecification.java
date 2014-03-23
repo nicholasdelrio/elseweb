@@ -36,8 +36,10 @@ public class JSONSpecification {
 	private void init(String jsonSpecString){
 		this.isValid = true;
 		
+		String cleanedSpecString = jsonSpecString.trim();
+		
 		try{
-			specification = new JSONObject(jsonSpecString);
+			specification = new JSONObject(cleanedSpecString);
 			init(specification);
 		}catch(Exception e){e.printStackTrace();}
 
