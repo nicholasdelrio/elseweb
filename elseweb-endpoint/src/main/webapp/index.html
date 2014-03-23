@@ -11,7 +11,31 @@
 <p>Please submit your ELSEWeb experiment specification in the text box below. An example specification can be found below.</p>
 
 	<form id="form1" name="form1" method="post" action="./JSONSpecification">
-		<textarea name="jsonSpec" id="jsonSpec" cols="100" rows="25"></textarea>
+		<textarea name="jsonSpec" id="jsonSpec" cols="100" rows="25">
+{"specification": {
+    "id": "d046d1fa-98cc-4705-b44d-884c263bbcfa",
+    "occurrenceDataID": "1032789",
+    "algorithm": {
+        "id": "ANN",
+        "parameterBindings": [
+            {"name": "Choice", "value": "1", "datatype": "integer"},
+            {"name": "Epoch", "value": "5000000", "datatype": "integer"},
+            {"name": "HiddenLayerNeurons", "value": "14", "datatype": "integer"},
+            {"name": "LearningRate", "value": "0.3", "datatype": "double"},
+            {"name": "MinimumError", "value": "0.01", "datatype": "double"},
+            {"name": "Momentum", "value": "0.05", "datatype": "double"}         
+            ]
+    },
+    "modelingScenario": [
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348880"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348881"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348882"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348883"},
+        {"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348884"}
+        ]
+    }
+}		
+		</textarea>
 		<br>
 		<input type="submit" name="button" id="button" value="Run Experiment" />
 	</form>
@@ -19,7 +43,7 @@
 <p>Alternatively, you can POST experiment specifications to the <a href="./JSONSpecification">JSONSpecification Submission Service</a>. Specifications posted to the JSONSpecification submission service should be bound to the <b>jsonSpec</b> parameter.</p>
 
 <p><b>Example Input:</b></p>
-<p>The example JSON files show below is accessible : <a href="http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json">here</a>.</p>
+<p>The example JSON file show below is accessible : <a href="http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json">here</a>.</p>
 
 <pre>
 {"specification": {
