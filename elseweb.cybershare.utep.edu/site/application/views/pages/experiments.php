@@ -20,7 +20,7 @@
                         <li><p><a href="<?php echo LODSPEAKR."instances/elseweb_lifemapper:SpeciesOccurrenceDataset";?>">Species Occurrence Data</a></p></li>
                     </ul>
 
-                    <a href="#" class="btn btn-purchase">Run an Experiment</a></p>
+                    <a href="http://elseweb.cybershare.utep.edu/gui/MSProject/vendors/kendo/examples/web/progressbar/elseweb.html" class="btn btn-purchase">Run an Experiment</a></p>
 
                 </div>
             </div>
