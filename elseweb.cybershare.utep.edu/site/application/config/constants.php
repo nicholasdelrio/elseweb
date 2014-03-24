@@ -51,6 +51,7 @@ define('ASSETS','resources/assets/');
 define('LODSPEAKR', 'http://visko.cybershare.utep.edu/linked-data/');
 define('ONTPREFIX', 'http://ontology.cybershare.utep.edu/ELSEWeb/');
 define("ENDPOINT", 'http://visko.cybershare.utep.edu/elseweb-endpoint/');
+define('VISKOSERVER', 'http://visko.cybershare.utep.edu/');
 //define('ADMIN','resources/dashboard/');
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
