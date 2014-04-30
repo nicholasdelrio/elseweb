@@ -142,14 +142,14 @@ public class Builder {
 		band = factory.createRGISDataBand(uri + bandLabel);
 
 		if(isPRISM(theme)){
-			MODISMeasurement measurementActivity = factory.createMODISMeasurement(uri + "-" + "measurementActivity");
-			measurementActivity.addWasAssociatedWith(this.sensorAgent);
-			band.addWasMeasuredBy(measurementActivity);
-		}
-		else{
 			PRISMModelling modellingActivity = factory.createPRISMModelling(uri + "-" + "modellingActivity");
 			modellingActivity.addWasAssociatedWith(this.modellingAgent);
 			band.addWasModelledBy(modellingActivity);
+		}
+		else{
+			MODISMeasurement measurementActivity = factory.createMODISMeasurement(uri + "-" + "measurementActivity");
+			measurementActivity.addWasAssociatedWith(this.sensorAgent);
+			band.addWasMeasuredBy(measurementActivity);			
 		}
 		
 		service.addHasDataBand(band);
