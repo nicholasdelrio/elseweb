@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTTPPOST Test</title>
+    <meta charset="utf-8">
+    <link href="../../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.rtl.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.flat.min.css" rel="stylesheet">
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/kendo.web.min.js"></script>
+    <script src="../../content/shared/js/console.js"></script>
+
+
+<script>
+var jsonSpec = '{"specification": {' + 
+    '"id": "d046d1fa-98cc-4705-b44d-884c263bbcfa",' +
+    '"occurrenceDataID": "1032789",' +
+    '"algorithm": {' +
+        '"id": "ANN",' +
+        '"parameterBindings": [' +
+            '{"name": "Choice", "value": "1", "datatype": "integer"},' +
+            '{"name": "Epoch", "value": "5000000", "datatype": "integer"},' +
+            '{"name": "HiddenLayerNeurons", "value": "14", "datatype": "integer"},' +
+            '{"name": "LearningRate", "value": "0.3", "datatype": "double"},' +
+            '{"name": "MinimumError", "value": "0.01", "datatype": "double"},' +
+            '{"name": "Momentum", "value": "0.05", "datatype": "double"}' +         
+            ']' +
+    '},' +
+    '"modelingScenario": [' +
+        '{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348880"},' +
+        '{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348881"},' +
+        '{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348882"},' + 
+        '{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348883"},' +
+        '{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348884"}' +
+        ']' +
+    '}' +
+'}';
+
+var serviceURL3 = 'http://visko.cybershare.utep.edu/elseweb-endpoint/JSONSpecification?jsonSpec=' + jsonSpec;
+
+function loadXMLDoc(){
+	var expURL;
+	var xmlhttp;
+	if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function(){
+		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+			expURL = xmlhttp.responseText.substr(205, 54);
+			document.getElementById("myDiv").innerHTML=expURL;
+		}
+	}
+	xmlhttp.open("POST",serviceURL3,true);
+	xmlhttp.send();
+}
+</script>
+</head>
+<body>
+
+<h2>LM EXP HTTP POST</h2>
+<button type="button" onclick="loadXMLDoc()">Request data</button>
+<div id="myDiv"></div>
+
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Test</title>
+    <meta charset="utf-8">
+	
+	<script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/kendo.web.min.js"></script>
+    <script src="../../content/shared/js/console.js"></script>
+
+	
+    <link href="../../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.rtl.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.flat.min.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+
+<script>
+
+    var csvString1 = 'LocalId,Longitude,Latitude,CanonicalName,CatalogNum,CollectionCode,CollectionDate,Collector,Guid, InstitutionCode,ModTime,ProviderName,ResourceName 1000,-144.09,31.15,"Sample Name","N1000","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid1","Sample Institution","2009-05-01 11:03:00","Sample Provider","Sample Resource" 1001,-1.8,-42.51,"Sample Name","N1001","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid2","Sample Institution","2009-05-01 11:03:30","Sample Provider","Sample Resource" 1002,-60.66,-10.26,"Sample Name","N1002","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid3","Sample Institution","2009-05-01 11:03:45","Sample Provider","Sample Resource" 1003,-14.28,5.92,"Sample Name","N1003","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid4","Sample Institution","2009-05-01 11:04:00","Sample Provider","Sample Resource" 1004,-155.04,-37.04,"Sample Name","N1004","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid5","Sample Institution","2009-05-01 11:04:01","Sample Provider","Sample Resource"'; 
+	var csvString = 'LocalId,Longitude,Latitude,CanonicalName,CatalogNum,CollectionCode,1,-86.34,44.00,"Example name","sCat1-1","My Collection",2,-87.42,43.89,"Example name","sCat1-2","My Collection",3,-86.51,43.98,"Example name","sCat1-3","My Collection"';
+	var lifemapperSpecies = 'http://lifemapper.org/services/sdm/occurrences/json';
+	var url = "http://visko.cybershare.utep.edu/sparql?default-graph-uri=&query=";
+
+	//Can only see response in browser's developer tools response section
+	function test(callback){  
+		$.ajax({
+			type: "POST",
+			url: lifemapperSpecies,
+			data: csvString1,
+			dataType: "jsonp",
+			success: function(data){
+				speciesOccurrence = JSON.stringify(data);
+				document.getElementById("myDiv").innerHTML=speciesOccurrence;	
+				if (typeof callback=="function") callback(data);	 
+            }                 
+		});
+	}
+	test(function(speciesOccurrence) {
+		var spe = JSON.stringify(speciesOccurrence.title)
+		alert(spe);
+		return spe;
+	});
+	  
+	
+		
+
+	//returns value in html, but doesn't save it in variable. Requests repeats 3 times.		
+	var sOccurrenceURL = url + "prefix+lifemapper%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper.owl%23%3E%0D%0Aprefix+data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0A%0D%0Aselect+%3Fid%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Flifemapper%2Foccurrences%2Fspecies-occurrences.owl%3E%0D%0Awhere%7B%0D%0A%3Fdataset+a+lifemapper%3ASpeciesOccurrenceDataset.%0D%0A%3Fdataset+data%3AhasLayer+%3Flayer.%0D%0A%3Fdataset+data%3AhasManifestation+%3Fmanif.%0D%0A%3Fmanif+data%3AhasFileDownloadURL+%3FfileURL.%0D%0A%3Fmanif+data%3AhasLandingPageURL+%3FmetadataURL.%0D%0A%3Flayer+data%3AcontainsFeatureSet+%3Fset.%0D%0A%3Fset+a+lifemapper%3ASpeciesOccurrenceSet.%0D%0A%3Fset+lifemapper%3AhasOccurrenceSetID+%3Fid.%0D%0A%3Fset+lifemapper%3AhasOccurrenceOfSpecies+%3Fspecies.%0D%0A%3Fspecies+lifemapper%3AhasGenusName+%22" + "Agrypon" + "%22%5E%5E%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23string%3E.%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+	function ajax_test(callback){
+		$.ajax({
+			type: "GET",
+			url: sOccurrenceURL, 
+			async: false,	
+			dataType: "jsonp",  
+			success: function(data) { 
+				speciesOccurrenceID = JSON.stringify(data.results.bindings[0].id.value);
+				document.getElementById("myDiv2").innerHTML=speciesOccurrenceID;
+					
+				if (typeof callback=="function") callback(data);
+			}			
+		});
+	}
+	
+	ajax_test(function(speciesOccurrenceID) {
+		var occ = JSON.stringify(speciesOccurrenceID.results.bindings[0].id.value)
+		alert(occ);
+		return occ;
+	});
+        
+	
+	
+	  
+
+
+</script>
+
+
+<body>
+csvrequest:
+<div id="myDiv"> </div>
+query:
+<div id="myDiv2"> </div>
+
+</body>
+</html>
