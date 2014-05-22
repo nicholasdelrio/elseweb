@@ -1,0 +1,20 @@
+prefix elseweb-data: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-data.owl#>
+prefix elseweb-edac: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#>
+select distinct ?entity
+from <http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/edac/services/wcs-services.owl>
+where
+{
+?dataset elseweb-data:coversRegion ?region.
+?region elseweb-data:hasLeftLongitude ?llon.
+?region elseweb-data:hasRightLongitude ?rlon.
+?region elseweb-data:hasLowerLatitude ?llat.
+?region elseweb-data:hasUpperLatitude ?ulat.
+
+filter(?llon <= "REPLACE-WEST")
+filter(?rlon >= "REPLACE-EAST")
+filter(?llat <= "REPLACE-SOUTH")
+filter(?ulat >= "REPLACE-NORTH")
+
+?dataset elseweb-data:hasDataBand ?band.
+?band elseweb-data:representsEntity ?entity.
+}

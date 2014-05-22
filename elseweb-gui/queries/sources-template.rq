@@ -1,0 +1,24 @@
+define input:inference "http://ontology.cybershare.utep.edu/ELSEWeb/mappings/elseweb-edac-mappings.owl"
+prefix elseweb-data: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-data.owl#>
+prefix elseweb-edac: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#>
+prefix provo: <http://www.w3.org/ns/prov#>
+select distinct ?source
+from <http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/edac/services/wcs-services.owl>
+where
+{
+?dataset elseweb-data:coversRegion ?region.
+?region elseweb-data:hasLeftLongitude ?llon.
+?region elseweb-data:hasRightLongitude ?rlon.
+?region elseweb-data:hasLowerLatitude ?llat.
+?region elseweb-data:hasUpperLatitude ?ulat.
+
+filter(?llon <= "REPLACE-WEST")
+filter(?rlon >= "REPLACE-EAST")
+filter(?llat <= "REPLACE-SOUTH")
+filter(?ulat >= "REPLACE-NORTH")
+
+?dataset elseweb-data:hasDataBand ?band.
+?band provo:wasGeneratedBy ?activity.
+?activity provo:wasAssociatedWith ?source
+}
+&format=application/json&timeout=0&debug=on&callback?

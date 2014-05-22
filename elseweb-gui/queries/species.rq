@@ -1,0 +1,17 @@
+prefix lifemapper: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-lifemapper.owl#>
+prefix data: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-data.owl#>
+
+select ?name
+from <http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/occurrences/species-occurrences.owl>
+where{
+?dataset a lifemapper:SpeciesOccurrenceDataset.
+?dataset data:hasLayer ?layer.
+?dataset data:hasManifestation ?manif.
+?manif data:hasFileDownloadURL ?fileURL.
+?manif data:hasLandingPageURL ?metadataURL.
+?layer data:containsFeatureSet ?set.
+?set a lifemapper:SpeciesOccurrenceSet.
+?set lifemapper:hasOccurrenceSetID ?id.
+?set lifemapper:hasOccurrenceOfSpecies ?species.
+?species lifemapper:hasGenusName ?name.
+}
