@@ -9,15 +9,17 @@
 ]>
 
 
-<rdf:RDF xmlns="http://www.semanticweb.org/nick/ontologies/2014/4/untitled-ontology-744#"
-     xml:base="http://www.semanticweb.org/nick/ontologies/2014/4/untitled-ontology-744"
+<rdf:RDF xmlns="http://ontology.cybershare.utep.edu/ELSEWeb/mappings/elseweb-mappings.owl#"
+     xml:base="http://ontology.cybershare.utep.edu/ELSEWeb/mappings/elseweb-mappings.owl"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <owl:Ontology rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/mappings/elseweb-data-mappings.owl">
+    <owl:Ontology rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/mappings/elseweb-mappings.owl">
         <owl:imports rdf:resource="http://ecoinformatics.org/oboe/oboe.1.0/oboe-core.owl"/>
         <owl:imports rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-data.owl"/>
+        <owl:imports rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl"/>
+        <owl:imports rdf:resource="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl"/>
         <owl:imports rdf:resource="http://semanticscience.org/ontology/sio.owl"/>
         <owl:imports rdf:resource="http://www.w3.org/ns/dcat"/>
         <owl:imports rdf:resource="http://www.w3.org/ns/prov-o#"/>
@@ -48,6 +50,30 @@
 
     <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-data.owl#hasManifestation">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/dcat#distribution"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#wasAssociatedWith -->
+
+    <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#wasAssociatedWith">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasAssociatedWith"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#wasMeasuredBy -->
+
+    <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#wasMeasuredBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#wasModelledBy -->
+
+    <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-edac.owl#wasModelledBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy"/>
     </rdf:Description>
     
 
@@ -110,6 +136,38 @@
     <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-data.owl#Unit">
         <rdfs:subClassOf rdf:resource="http://ecoinformatics.org/oboe/oboe.1.0/oboe-core.owl#Unit"/>
         <rdfs:subClassOf rdf:resource="http://semanticscience.org/resource/SIO_000074"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingAlgorithm -->
+
+    <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingAlgorithm">
+        <rdfs:subClassOf rdf:resource="http://semanticscience.org/resource/SIO_000094"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameter -->
+
+    <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameter">
+        <rdfs:subClassOf rdf:resource="http://semanticscience.org/resource/SIO_000144"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameters -->
+
+    <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingParameters">
+        <rdfs:subClassOf rdf:resource="http://semanticscience.org/resource/SIO_000616"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingSoftware -->
+
+    <rdf:Description rdf:about="http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#SpeciesModellingSoftware">
+        <rdfs:subClassOf rdf:resource="http://semanticscience.org/resource/SIO_000140"/>
     </rdf:Description>
 </rdf:RDF>
 
