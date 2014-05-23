@@ -15,7 +15,7 @@
 |
 */
 //$config['base_url']	= 'http://elseweb.cybershare.utep.edu/';
-$config['base_url']	= 'http://localhost:8888/elseweb';
+$config['base_url']	= 'http://localhost/elseweb/elseweb.cybershare.utep.edu/site/';
 
 /*
 |--------------------------------------------------------------------------

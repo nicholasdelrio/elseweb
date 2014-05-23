@@ -37,7 +37,7 @@
 |
 */
 
-$autoload['packages'] = array();
+$autoload['packages'] = array('');
 
 
 /*
@@ -53,6 +53,7 @@ $autoload['packages'] = array();
 */
 
 $autoload['libraries'] = array('xmlrpc');
+$autoload['libraries'] = array('database');
 
 
 /*
