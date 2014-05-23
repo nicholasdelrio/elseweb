@@ -88,6 +88,26 @@
                     <p>Python Master, Web Services, GIS</p>
                 </div>
             </div>
+            
+            <div class="col-lg-4">
+                 <div class="person text-center">
+                    <img src="<?php echo base_url(IMAGES."team/lgarnica.jpg");?>" alt="image">
+                </div>
+                <div class="person-info text-center">
+                    <h4>
+                        <a href="javascript:;">Luis Garnica</a>
+                    </h4>
+                    <p class="text-muted">ELSEWeb Database Developer</p>
+                    <div class="team-social-link">
+                        <a href="https://www.linkedin.com/pub/luis-garnica/38/26/853"><i class="icon-linkedin"></i></a>
+                    </div>
+                                        <div class="content">
+                        <i>lagarnicachavira@miners.utep.edu</i>
+                    </div>
+
+                    <p>Web Developer, Computer Engineer</p>
+                </div>
+            </div>
         </div>
     </div>
     <!--container end-->
