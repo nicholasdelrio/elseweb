@@ -1,0 +1,20 @@
+prefix modelling: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#>
+prefix parameters: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-lifemapper-parameters.owl#>
+prefix lifemapper: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-lifemapper.owl#>
+
+select distinct ?algorithmURI ?algorithmName ?paramName ?default ?min ?max (datatype(?default) as ?datatype)
+
+from <http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/parameter-descriptions/parameter-descriptions.owl>
+where
+{
+?algorithmURI a lifemapper:LifemapperAlgorithm.
+?algorithmURI modelling:hasAlgorithmName ?algorithmName.
+?params lifemapper:describesBehaviorOf ?algorithmURI.
+?params lifemapper:hasParameterDescription ?paramDescription.
+
+?paramDescription modelling:hasParameterName ?paramName.
+?paramDescription lifemapper:hasDefaultValue ?default.
+
+optional{?paramDescription lifemapper:hasLowerBoundInclusive ?min.}
+optional{?paramDescription lifemapper:hasUpperBoundInclusive ?max.}
+}
