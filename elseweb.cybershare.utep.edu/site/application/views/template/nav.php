@@ -31,9 +31,7 @@
                                 if($this->session->flashdata('incorrect_user'))
                             {
                             ?>
-                            <script type="text/javascript">
-                              alert("incorrect user password combination");
-                            </script>
+                              <p></p>                   
                             <?php
                             }
                             ?>
