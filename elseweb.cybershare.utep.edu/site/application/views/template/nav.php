@@ -1,4 +1,4 @@
- <div class="container">
+<div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
@@ -17,14 +17,31 @@
                         <li class="<?php echo isActive($pageName,"team")?>"><a href="<?php echo site_url('team') ?>">Team</a></li>          
                         <li class="<?php echo isActive($pageName,"publications")?>"><a href="<?php echo site_url('publications') ?>">Publications</a></li>
 
-                        <!--
-                        <li class="dropdown ">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Feature <b class=" icon-angle-down"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="typography.html">Typography</a></li>
-                                <li><a href="button.html">Buttons</a></li>
-                            </ul>
+                        <li class="dropdown" id="menuLogin">
+                          <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+                          <div class="dropdown-menu" style="padding:17px;">
+                            <?php echo form_open('login/new_user'); ?>
+                             <label for="username">Username:</label>
+                             <input type="text" size="20" id="username" name="username"/><br/>
+                             <label for="password">Password:</label>
+                             <input type="password" size="20" id="password" name="password"/><br/>
+                             <input type="submit" value="Login"/>
+                            </form>
+                            <?php 
+                                if($this->session->flashdata('incorrect_user'))
+                            {
+                            ?>
+                            <script type="text/javascript">
+                              alert("incorrect user password combination");
+                            </script>
+                            <?php
+                            }
+                            ?>
+                          </div>
                         </li>
+
+                        
+                        <!--
                         <li class="<?php echo isActive($pageName,"contacts")?>"><a href="<?php echo site_url('contacts') ?>">Contacts</a></li>
                        
                         <li class="<?php echo isActive($pageName,"login")?>"><a href="<?php echo site_url('dashboard/login') ?>">Login</a></li>

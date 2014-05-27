@@ -80,7 +80,7 @@ class Migration_Initial_schema extends CI_Migration{
             ),  
             'Upassword' => array (
                 'type' => 'VARCHAR',
-                'constraint' => '20',
+                'constraint' => '100',
             ),
             'Uemail' => array (
                 'type' => 'VARCHAR',

@@ -66,7 +66,7 @@ p {line-height: 22px}
 }
 
 .navbar-brand span{
-    color: #FF4900;  #f25f5b
+    color: #FF4900;  #f25f5b;
 }
 
 .header-frontend .navbar-collapse  ul.navbar-nav {
@@ -151,8 +151,8 @@ p {line-height: 22px}
 }
 
 .dropdown-menu  {
-    box-shadow: none;
-    border-radius: 0;
+    box-shadow: 'gray';
+    border-radius: 5px;
 }
 
 .header-frontend .nav li .dropdown-menu  {
