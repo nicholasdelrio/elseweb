@@ -30,7 +30,7 @@
     
 
     <!-- Custom styles for this template -->
-     <link rel="stylesheet" href="<?php echo base_url(CSS."style.css");?>">
+    <link rel="stylesheet" href="<?php echo base_url(CSS."style.css");?>">
     <link rel="stylesheet" href="<?php echo base_url(CSS."style-responsive.css");?>">
     
 

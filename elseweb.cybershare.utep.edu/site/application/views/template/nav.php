@@ -6,7 +6,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     
-                    <a class="navbar-brand" href="index.html">ELSE<span>Web</span></a>
+                    <a class="navbar-brand" href="<?php echo site_url('home')?>">ELSE<span>Web</span></a>
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
@@ -34,7 +34,9 @@
                               <hr/>
                               <input type="button" value="Forgot Username or Password?"  class="btn-small btn-default"/>
                               <input type="button" value="Login"  class="btn-small btn-default pull-right" onclick="userLogin('<?php echo site_url('login')?>')"/>
-                              <input type="button" style="margin-right: 10px;" value="Register"  class="btn-small btn-default pull-right"/>
+                              <a href="<?php echo site_url('register')?>">
+                                  <input type="button" style="margin-right: 10px;" value="Register"  class="btn-small btn-default pull-right"/>
+                              </a>
                           </div>
                         </li>
                        <?php } else {?>

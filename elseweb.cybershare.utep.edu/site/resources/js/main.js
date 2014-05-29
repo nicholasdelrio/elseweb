@@ -7,15 +7,15 @@ function userLogin(base_url){
         'url' : base_url + '/' + 'new_user',
         'type' : 'POST', //the way you want to send data to your URL
         'data' : 'username=' + username + '&password='  + password,
-        'success' : function(result){ //probably this request will return anything, it'll be put in var "data"
+        'success' : function(result){ //probably this request will return anything, it'll be put in var "result"
             //var container = $('#container'); //jquery selector (get element by id)
             if(result){
                 if (result === 'success'){
                     topNoty('success', 'Login Successful!');
-                    setTimeout('location.reload()', 3000);
+                    setTimeout('location.reload()', 2900);
                 }
                 else
-                    topNoty('warning', result)
+                    topNoty('warning', result);
             }
             else
                 topNoty('error', 'An error has ocurred.');
@@ -23,8 +23,6 @@ function userLogin(base_url){
     });
       
 }
-
-
 
 
 function topNoty (type, text) { 
@@ -39,6 +37,6 @@ function topNoty (type, text) {
             easing: 'swing',
             speed: 700 
         },
-        timeout: 1900
+        timeout: 1800
     });     
  }
