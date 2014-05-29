@@ -11,34 +11,13 @@ class Login extends CI_Controller
 		$this->load->database('default');
     }
 	
-    public function index(){	
-		switch ($this->session->userdata('level')) {
-			case '':
-				//$data['token'] = $this->token();
-				$data['title'] = 'Login with user roles on codeigniter';
-				$this->load->view('pages/home',$data);
-				break;
-			case 'administrator':
-				redirect(base_url().'admin');
-				break;
-			case 'subscriber':
-				redirect(base_url().'subscriber');
-				break;
-			default:		
-				$data['title'] = 'Login with user roles on codeigniter';
-				$this->load->view('pages/home',$data);
-				break;		
-		}
-     }
-
     public function new_user(){
             $this->form_validation->set_rules('username', 'user name', 'required|trim|min_length[2]|max_length[150]|xss_clean');
             $this->form_validation->set_rules('password', 'password', 'required|trim|min_length[5]|max_length[150]|xss_clean');
  
             //throw error messages if we have any
             if($this->form_validation->run() == FALSE){
-               // $this->index();
-                echo "form validation errors";
+                echo "Incorrect Inputs";
 	    }
             else{
                 $username = $this->input->post('username');
@@ -50,8 +29,7 @@ class Login extends CI_Controller
 	                'level' => 'subscriber',
 	                'username' => $check_user->Uusername);		
 			$this->session->set_userdata($data);
-			//redirect(base_url().'home');
-                        echo "login credentials valid";
+                        echo "success";
 		}
 	     }
 		

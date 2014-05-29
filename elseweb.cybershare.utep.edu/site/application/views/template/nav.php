@@ -20,12 +20,13 @@
                         <li class="dropdown" id="menuLogin">
                           <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
                           <div class="dropdown-menu" style="padding:17px;">
-                            <?php echo form_open('login/new_user'); ?>
+                            <form  method="post" id="loginForm" name="loginForm" action=""
+                                   onsubmit="userLogin(<?php echo site_url();?>); return false;">
                              <label for="username">Username:</label>
                              <input type="text" size="20" id="username" name="username"/><br/>
                              <label for="password">Password:</label>
                              <input type="password" size="20" id="password" name="password"/><br/>
-                             <input type="submit" value="Login"/>
+                             <input class="btn-primary" type="button" value="Login" onclick="userLogin('<?php echo site_url('login')?>')"/>
                             </form>
                             <?php 
                                 if($this->session->flashdata('incorrect_user'))

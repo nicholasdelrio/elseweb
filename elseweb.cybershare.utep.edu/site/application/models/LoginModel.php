@@ -16,7 +16,7 @@ class LoginModel extends CI_Model {
             return $query->row();
         }else{
             $this->session->set_flashdata('incorrect_user','Invalid user/password combination');
-            echo "incorrect user session";
+            echo "Invalid user/password combination";
         }
     }
 }

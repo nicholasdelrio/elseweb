@@ -53,6 +53,9 @@
     <script src="<?php echo base_url(JS."jquery.easing.min.js");?>"></script>
     <script src="<?php echo base_url(JS."link-hover.js");?>"></script>
     <script src="<?php echo base_url(ASSETS."fancybox/source/jquery.fancybox.pack.js");?>"></script>
+    <script src="<?php echo base_url(ASSETS."noty/packaged/jquery.noty.packaged.min.js");?>"></script>
+    <script src="<?php echo base_url(ASSETS."noty/layouts/top.js");?>"></script>
+    <script src="<?php echo base_url(ASSETS."noty/themes/default.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url(ASSETS."revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url(ASSETS."revolution_slider/rs-plugin/js/jquery.themepunch.revolution.min.js");?>"></script>
       
@@ -60,6 +63,7 @@
     <!--common script for all pages-->
     <script src="<?php echo base_url(JS."common-scripts.js");?>"></script>
     <script src="<?php echo base_url(JS."revulation-slide.js");?>"></script>
+    <script src="<?php echo base_url(JS."main.js");?>"></script>
 
    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&AMP;sensor=false"></script>
     
