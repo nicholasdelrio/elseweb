@@ -19,23 +19,23 @@
 
                         <li class="dropdown" id="menuLogin">
                           <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
-                          <div class="dropdown-menu" style="padding:17px;">
-                            <form  method="post" id="loginForm" name="loginForm" action=""
-                                   onsubmit="userLogin(<?php echo site_url();?>); return false;">
-                             <label for="username">Username:</label>
-                             <input type="text" size="20" id="username" name="username"/><br/>
-                             <label for="password">Password:</label>
-                             <input type="password" size="20" id="password" name="password"/><br/>
-                             <input class="btn-primary" type="button" value="Login" onclick="userLogin('<?php echo site_url('login')?>')"/>
+                          <div class="dropdown-menu pull-right" style="padding:10px;">
+                            <form  class="form-inline" role="form" method="post" id="loginForm" name="loginForm" action="">
+                             <fieldset>
+                             <div class="form-group">
+                                <input type="text" placeholder="Username" style="margin-top: 8px" size="20" id="username" name="username"/>
+                             </div>
+                             <div class="form-group">
+                                 <input type="password" placeholder="Password"  style="margin-top: 8px" size="20" id="password" name="password"/><br/>
+                             </div>
+                             </fieldset>
                             </form>
-                            <?php 
-                                if($this->session->flashdata('incorrect_user'))
-                            {
-                            ?>
-                              <p></p>                   
-                            <?php
-                            }
-                            ?>
+                              <hr/>
+                              <input type="button" value="Forgot Username or Password?"  class="btn-small btn-default"/>
+                              <input type="button" value="Login"  class="btn-small btn-default pull-right" onclick="userLogin('<?php echo site_url('login')?>')"/>
+                              <input type="button" style="margin-right: 10px;" value="Register"  class="btn-small btn-default pull-right"/>
+                             
+                               
                           </div>
                         </li>
 
