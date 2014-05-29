@@ -17,7 +17,8 @@
                         <li class="<?php echo isActive($pageName,"team")?>"><a href="<?php echo site_url('team') ?>">Team</a></li>          
                         <li class="<?php echo isActive($pageName,"publications")?>"><a href="<?php echo site_url('publications') ?>">Publications</a></li>
 
-                        <li class="dropdown" id="menuLogin">
+                       <?php if(!$this->session->userdata('is_logged_in')) { ?>
+                        <li class="dropdown <?php echo isActive($pageName,"login/new_user")?>" id="menuLogin">
                           <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
                           <div class="dropdown-menu pull-right" style="padding:10px;">
                             <form  class="form-inline" role="form" method="post" id="loginForm" name="loginForm" action="">
@@ -34,11 +35,12 @@
                               <input type="button" value="Forgot Username or Password?"  class="btn-small btn-default"/>
                               <input type="button" value="Login"  class="btn-small btn-default pull-right" onclick="userLogin('<?php echo site_url('login')?>')"/>
                               <input type="button" style="margin-right: 10px;" value="Register"  class="btn-small btn-default pull-right"/>
-                             
-                               
                           </div>
                         </li>
-
+                       <?php } else {?>
+                       <li class="<?php echo isActive($pageName,"login")?>"><a href="<?php echo site_url('login/logout_ci') ?>">Logout</a></li>
+                        
+                       <?php } ?> 
                         
                         <!--
                         <li class="<?php echo isActive($pageName,"contacts")?>"><a href="<?php echo site_url('contacts') ?>">Contacts</a></li>

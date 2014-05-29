@@ -11,7 +11,8 @@ function userLogin(base_url){
             //var container = $('#container'); //jquery selector (get element by id)
             if(result){
                 if (result === 'success'){
-                    topNoty('success', 'Login Successful!');   
+                    topNoty('success', 'Login Successful!');
+                    setTimeout('location.reload()', 3000);
                 }
                 else
                     topNoty('warning', result)
@@ -38,6 +39,6 @@ function topNoty (type, text) {
             easing: 'swing',
             speed: 700 
         },
-        timeout: 2000
+        timeout: 1900
     });     
  }

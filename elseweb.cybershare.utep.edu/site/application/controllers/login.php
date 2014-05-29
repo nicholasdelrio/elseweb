@@ -44,7 +44,9 @@ class Login extends CI_Controller
 	
 	public function logout_ci(){
             $this->session->sess_destroy();
-            $this->index();
+            //$this->index();
+            $url = site_url();
+            header('Location: '.$url);
 	}
         
 }
