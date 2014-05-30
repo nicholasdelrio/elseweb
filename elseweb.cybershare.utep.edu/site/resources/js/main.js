@@ -24,6 +24,34 @@ function userLogin(base_url){
       
 }
 
+function userRegister(base_url){   
+    var username = $('#reg_username').val();
+    var password = $('#reg_password').val();
+    var pass_confirm = $('#pass_confirm').val();
+    var email = $('#email').val();
+    var discipline = $('#disc').val();
+    var organization = $('#org').val();
+        $.ajax({
+            'url' : base_url + '/' + 'register',
+            'type' : 'POST', //the way you want to send data to your URL
+            'data' : 'username=' + username + '&password='  + password + '&pass_confirm='  + pass_confirm + '&email='  + email + '&disc='  + discipline + '&org='  + organization,
+            'success' : function(result){ //probably this request will return anything, it'll be put in var "result"
+                //var container = $('#container'); //jquery selector (get element by id)
+                if(result){
+                    if (result === 'success'){
+                        topNoty('success', 'Registration Successful!');
+                        $('#registerForm').trigger("reset");
+                    }
+                    else
+                        topNoty('warning', result);
+                }
+                else
+                    topNoty('error', 'An error has ocurred.');
+            }       
+        });
+      
+}
+
 
 function topNoty (type, text) { 
     noty({

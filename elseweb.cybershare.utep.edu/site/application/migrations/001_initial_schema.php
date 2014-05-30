@@ -99,6 +99,7 @@ class Migration_Initial_schema extends CI_Migration{
         //Hardcoded foreign keys
         $this->db->query('ALTER TABLE USER ADD FOREIGN KEY (Did_FK) REFERENCES DISCIPLINE (Did)');
         $this->db->query('ALTER TABLE USER ADD FOREIGN KEY (Oid_FK) REFERENCES ORGANIZATION (Oid)');
+        $this->db->sql('ALTER TABLE USER ADD UNIQUE INDEX (Uemail)');
         
         //Initial Data
         $data = array(

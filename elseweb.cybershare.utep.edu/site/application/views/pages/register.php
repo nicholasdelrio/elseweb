@@ -15,51 +15,48 @@
           </div>
 
           <div class="panel-body">
-            <form class="form-horizontal row-border" action="#" method="post"
-                  id="registerForm">
+            <form class="form-horizontal row-border" method="post"
+                  id="registerForm" name="registerForm">
               <div class="form-group">
                 <label class="col-md-2 control-label">Username</label>
                 <div class="col-md-10">
-                  <input type="text" name="regular" class="form-control">
+                  <input type="text" name="reg_username" id="reg_username" class="form-control">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Email</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="text">
+                  <input class="form-control" name="email" id="email" type="text">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Discipline</label>
                 <div class="col-md-10">
-                    <select class="form-control" name="disc">
-                        <option>Test</option>
-                    </select>
+                    <input class="form-control" name="disc" id="disc" type="text">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Organization</label>
                 <div class="col-md-10">
-                    <select class="form-control" name="org">
-                        <option>Test</option>
-                    </select>
+                    <input class="form-control" name="org" id="org" type="text">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Password</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="password" name="pass">
+                  <input class="form-control" type="password" name="reg_password" id="reg_password">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Confirm Password</label>
                 <div class="col-md-10">
-                  <input class="form-control" type="password" name="pass_confirm">
+                  <input class="form-control" type="password" name="pass_confirm" id="pass_confirm">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-12">
-                  <input class="btn btn-lg btn-default pull-right" type="submit">
+                  <input class="btn btn-lg btn-default pull-right" type="button" value="Submit"
+                         onclick="userRegister('<?php echo site_url('login')?>')">
                 </div>
               </div>
               
