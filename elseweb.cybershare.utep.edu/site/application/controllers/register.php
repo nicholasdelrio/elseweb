@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php //defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Register extends MY_Controller{
     
@@ -18,6 +18,26 @@ class Register extends MY_Controller{
         $folder = 'template';
 		$this->_render('pages/register',$renderData,'template');
 	}
+        
+        public function get_discipline(){
+             $this->load->model('registration_model');
+             if ($this->input->get('term')){
+                 $q = $this->security->xss_clean($this->input->get('term'));
+                 $q = strtolower($q);
+                 $this->registration_model->get_discipline($q);
+             }
+        }
+        
+        
+        public function get_organization(){
+             $this->load->model('registration_model');
+             if ($this->input->get('term')){
+                 $q = $this->security->xss_clean($this->input->get('term'));
+                 $q = strtolower($q);
+                 $this->registration_model->get_organization($q);
+             }           
+            
+        }
     
 }
 

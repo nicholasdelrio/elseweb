@@ -1,4 +1,10 @@
- <!--container start-->
+<script type="text/javascript">
+  var disc_url = '<?php echo site_url('register/get_discipline'); ?>';    
+  var org_url = '<?php echo site_url('register/get_organization'); ?>'; 
+</script>
+
+
+<!--container start-->
  <div class="container register">
     <div class="row">
         <div class="text-center feature-head">

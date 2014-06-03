@@ -52,6 +52,18 @@ function userRegister(base_url){
       
 }
 
+$(function(){
+  $("#disc").autocomplete({
+    source: disc_url
+  });
+}); 
+
+$(function(){
+  $("#org").autocomplete({
+    source: org_url
+  });
+}); 
+
 
 function topNoty (type, text) { 
     noty({
@@ -63,8 +75,8 @@ function topNoty (type, text) {
             open: {height: 'toggle'},
             close: {height: 'toggle'},
             easing: 'swing',
-            speed: 700 
+            speed: 650 
         },
-        timeout: 1800
+        timeout: 1900
     });     
  }
