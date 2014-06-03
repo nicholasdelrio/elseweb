@@ -99,7 +99,7 @@ class Migration_Initial_schema extends CI_Migration{
         //Hardcoded foreign keys
         $this->db->query('ALTER TABLE USER ADD FOREIGN KEY (Did_FK) REFERENCES DISCIPLINE (Did)');
         $this->db->query('ALTER TABLE USER ADD FOREIGN KEY (Oid_FK) REFERENCES ORGANIZATION (Oid)');
-        $this->db->sql('ALTER TABLE USER ADD UNIQUE INDEX (Uemail)');
+        $this->db->query('ALTER TABLE USER ADD UNIQUE INDEX (Uemail)');
         
         //Initial Data
         $data = array(
@@ -120,7 +120,7 @@ class Migration_Initial_schema extends CI_Migration{
         $fields = array(
           'Aid' => array(
               'type' => 'CHAR',
-              'constraint' => '3'
+              'constraint' => '15'
           )  
         );
                 
@@ -132,11 +132,12 @@ class Migration_Initial_schema extends CI_Migration{
         echo "Creating table 'EXPERIMENT'";
         $fields = array (
             'Eid' => array(
-                'type' => 'INT'
+                'type' => 'VARCHAR',
+                'constraint' => '100'
             ),
             'Aid_FK' => array(
                 'type' => 'CHAR',
-                'constraint' => '3'
+                'constraint' => '15'
             ),
             'Uusername_FK'=> array(
                 'type' => 'VARCHAR',
@@ -212,7 +213,8 @@ class Migration_Initial_schema extends CI_Migration{
                 'constraint' => '100'
             ),
             'Eid_FK' => array(
-                'type' => 'INT'
+                'type' => 'VARCHAR',
+                'constraint' => '100'
             )
         );
         
@@ -234,7 +236,7 @@ class Migration_Initial_schema extends CI_Migration{
             ),
             'Aid_FK' => array(
                 'type' => 'CHAR',
-                'constraint' => '3'
+                'constraint' => '15'
             )
         );
 
@@ -255,7 +257,8 @@ class Migration_Initial_schema extends CI_Migration{
                'constraint' => '50'
            ),
            'Eid_FK' => array(
-               'type' => 'INT'
+               'type' => 'VARCHAR',
+               'constraint' => '100'
            ),
            'Pvalue' =>  array(
                'type' => 'VARCHAR',
