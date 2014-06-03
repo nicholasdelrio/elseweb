@@ -8,11 +8,9 @@ class Experiment_model extends CI_Model {
     }
     
     public function store_experiment($decoded_json){
-        $Eid = $decoded_json['specification']['id'];
-        $EocurrendeDataID = $decoded_json['specification']['occurrenceDataID'];
-        $Uusername = $this->session->userdata('username');
-        $Estatus = "success"; //hardcoded
         
+        $this->db->trans_start();
+        //Insert Algorithm into the database if it does not exist
         $Aid = $decoded_json['specification']['algorithm']['id'];
         if($this->checkExistance('ALGORITHM', 'Aid', $Aid)==FALSE){
             $data=array(
@@ -20,20 +18,52 @@ class Experiment_model extends CI_Model {
             );
             $this->db->insert('ALGORITHM',$data);
         }
+        
+        //Get data for Experiment table
+        $Eid = $decoded_json['specification']['id'];
+        $EocurrendeDataID = $decoded_json['specification']['occurrenceDataID'];
+        $Uusername = $this->session->userdata('username');
+        $Estatus = "success"; //hardcoded
+        $this->db->set('Etimestamp', 'NOW()', FALSE);
+        $data=array(
+            'Eid'=>$Eid,
+            'Aid_FK'=>$Aid,
+            'Uusername_FK'=>$Uusername,
+            'Estatus'=>$Estatus,
+            'EocurrenceDataID'=>$EocurrendeDataID
+        );
+        $this->db->insert('EXPERIMENT',$data);
        
         foreach ($decoded_json['specification']['algorithm']['parameterBindings'] as $param){
-           //Do parameter insertion here
+            if($this->checkExistance('PARAMETER', 'Pname', $param['name'])==FALSE){
+                $data=array(
+                       'Pname'    => $param['name'],
+                       'Aid_FK' => $Aid
+                );
+                $this->db->insert('PARAMETER',$data);
+             }
 
-           //echo $param['name']."\n";
-           // echo $param['value'];
+             $data=array(
+                    'Pname_FK' => $param['name'],
+                    'Eid_FK'   => $Eid,
+                    'Pvalue'   => $param['value']
+             );
+             $this->db->insert('EXP_PARAMETERS',$data);
+             //echo $param['name']."\n";
+             // echo $param['value'];
         }
         
         foreach($decoded_json['specification']['modelingScenario'] as $scenario){
-            //echo $scenario['datasetURI'];
-                       
+            $data=array(
+                    'datasetURI' => $scenario['datasetURI'],
+                    'Eid_FK'   => $Eid
+             );
+             $this->db->insert('ENVIRONMENT',$data);             
         }
         
-        $this->db->set('Etimestamp', 'NOW()', FALSE);
+        //End of transaction
+        $this->db->trans_complete();
+        
                 
     }
     
