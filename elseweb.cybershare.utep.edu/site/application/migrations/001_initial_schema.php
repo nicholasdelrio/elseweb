@@ -106,7 +106,7 @@ class Migration_Initial_schema extends CI_Migration{
             'Uusername' => 'Admin',
             'Did_FK' => '1',
             'Oid_FK' => '1',
-            'Upassword' => 'elseweb1',
+            'Upassword' => 'd033e22ae348aeb5660fc2140aec35850c4da997',
             'Uemail' => 'lagc03@gmail.com',
             'Ureg_date' => '2014-01-01'
         );        

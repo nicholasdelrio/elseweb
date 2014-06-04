@@ -1,4 +1,4 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Experiment_model extends CI_Model {
     
@@ -9,7 +9,10 @@ class Experiment_model extends CI_Model {
     
     public function store_experiment($decoded_json){
         
+      try{ 
+        
         $this->db->trans_start();
+        
         //Insert Algorithm into the database if it does not exist
         $Aid = $decoded_json['specification']['algorithm']['id'];
         if($this->checkExistance('ALGORITHM', 'Aid', $Aid)==FALSE){
@@ -23,7 +26,7 @@ class Experiment_model extends CI_Model {
         $Eid = $decoded_json['specification']['id'];
         $EocurrendeDataID = $decoded_json['specification']['occurrenceDataID'];
         $Uusername = $this->session->userdata('username');
-        $Estatus = "success"; //hardcoded
+        $Estatus = "success"; //hardcoded CHANGE THIS
         $this->db->set('Etimestamp', 'NOW()', FALSE);
         $data=array(
             'Eid'=>$Eid,
@@ -35,6 +38,7 @@ class Experiment_model extends CI_Model {
         $this->db->insert('EXPERIMENT',$data);
        
         foreach ($decoded_json['specification']['algorithm']['parameterBindings'] as $param){
+            //Insert parameter name only if it doesn't exist un PARAMETER table
             if($this->checkExistance('PARAMETER', 'Pname', $param['name'])==FALSE){
                 $data=array(
                        'Pname'    => $param['name'],
@@ -49,11 +53,10 @@ class Experiment_model extends CI_Model {
                     'Pvalue'   => $param['value']
              );
              $this->db->insert('EXP_PARAMETERS',$data);
-             //echo $param['name']."\n";
-             // echo $param['value'];
         }
         
         foreach($decoded_json['specification']['modelingScenario'] as $scenario){
+            //Insert experiment modeling scenarios (datasetURI)
             $data=array(
                     'datasetURI' => $scenario['datasetURI'],
                     'Eid_FK'   => $Eid
@@ -64,7 +67,20 @@ class Experiment_model extends CI_Model {
         //End of transaction
         $this->db->trans_complete();
         
-                
+      }
+      
+        catch (Exception $e) {
+            echo ('error: '.$e->getMessage());  
+            return false;
+       }
+       
+       if ($this->db->trans_status() == TRUE){
+           return true;
+       }
+       else{
+           return false;
+       }
+                 
     }
     
     private function checkExistance ($tablename, $columnname, $value){

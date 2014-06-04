@@ -67,8 +67,8 @@ class LoginModel extends CI_Model {
                'Oid_FK'=>$Oid,
                'Upassword'=>$password,
                'Uemail'=>$email
-
             );
+            
             $this->db->set('Ureg_date', 'NOW()', FALSE);
             $this->db->insert('USER',$data);
 

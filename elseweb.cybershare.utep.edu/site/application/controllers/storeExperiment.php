@@ -2,38 +2,46 @@
 
 class StoreExperiment extends CI_Controller{
 
+    public function __construct()
+    {
+        parent::__construct();
+		$this->load->model('experiment_model');
+		$this->load->library(array('session','form_validation'));
+		$this->load->helper(array('url','form'));
+    }
+
+
+   //Store sigle experiment data from logged in user
     public function store(){
-        $this->load->model('experiment_model');
-        $s = "{\"specification\": {
-                \"id\": \"d046d1fa-98cc-4705-b44d-884c263bbcfa\",
-                \"occurrenceDataID\": \"1032789\",
-                \"algorithm\": {
-                    \"id\": \"ANN\",
-                    \"parameterBindings\": [
-                        {\"name\": \"Choice\", \"value\": \"1\", \"datatype\": \"integer\"},
-                        {\"name\": \"Epoch\", \"value\": \"5000000\", \"datatype\": \"integer\"},
-                        {\"name\": \"HiddenLayerNeurons\", \"value\": \"14\", \"datatype\": \"integer\"},
-                        {\"name\": \"LearningRate\", \"value\": \"0.3\", \"datatype\": \"double\"},
-                        {\"name\": \"MinimumError\", \"value\": \"0.01\", \"datatype\": \"double\"},
-                        {\"name\": \"Momentum\", \"value\": \"0.05\", \"datatype\": \"double\"}         
-                        ]
-                },
-                \"modelingScenario\": [
-                    {\"datasetURI\": \"http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348882\"},
-                    {\"datasetURI\": \"http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348883\"},
-                    {\"datasetURI\": \"http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348884\"}
-                    ]
-                }
-            }";   
-          $json = str_replace(array("\t","\n"), "", $s);
-          $a = json_decode($json, true);
-          foreach($a as $item)
-          {
-               var_dump($item);
-          } 
+        
+            $this->form_validation->set_rules('experiment', 'JSON DATA', 'required|trim|xss_clean');
+ 
+            //throw error messages if we have any
+            if($this->form_validation->run() == FALSE){
+                echo validation_errors();
+	    }
+            else
+            {
+                //Parse JSON string
+                $s = $this->input->post('experiment');
+                $json = str_replace(array("\t","\n"), "", $s);
+                $a = json_decode($json, true);
+
+                //Uncomment For debugging purposes
+                /*
+                foreach($a as $item)
+                {
+                     var_dump($item);
+                } 
+                 */ 
           
-          $this->experiment_model->store_experiment($a);
-          
+               if($this->experiment_model->store_experiment($a)){
+                   echo "success";
+               }
+                else{
+                    echo "Error Occured";
+               }
+           }
     }
         
 }
