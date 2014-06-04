@@ -1,4 +1,4 @@
-<?php //defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class StoreExperiment extends CI_Controller{
 
