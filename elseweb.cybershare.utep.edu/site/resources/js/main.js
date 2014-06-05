@@ -1,14 +1,31 @@
 /* Main Javascript Functions */
 
 /* Experiment functions */
+function genGUID(base_url){
+    $.ajax({
+    url: base_url + '/' + 'guid',
+    success: function(response) { 
+         if(response){
+             appendGUID(response, base_url);
+         }
+       }     
+    });  
+}
+
+function appendGUID(guid, base_url){
+    var experiment_json = $('#experiment').val();  
+    experiment_json = $.parseJSON(experiment_json);
+    experiment_json["specification"]["id"] = guid;
+    experiment_json = JSON.stringify(experiment_json);
+    alert(guid);
+    alert(experiment_json);
+    storeExperiment(experiment_json, base_url);
+}
 
 
-
-function storeExperiment(base_url){
-    var experiment_json = $('#experiment').val();
+function storeExperiment(experiment_json, base_url){  
     $.ajax({
         'url' : base_url + '/' + 'store',
-        //'dataType' : 'json',
         'type' : 'POST', //the way you want to send data to your URL
         'data' : 'experiment=' + experiment_json, //JSON.stringify(experiment_json)
         'success' : function(result){ 

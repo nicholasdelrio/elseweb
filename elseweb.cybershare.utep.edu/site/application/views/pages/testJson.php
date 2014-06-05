@@ -14,7 +14,7 @@
              <textarea id="experiment" name="experiment"  rows="20" cols="92" style="background-color: #ffffff"></textarea>
            </div>
                 <button type="button" class="btn btn-default pull-right" 
-                   onclick="storeExperiment('<?php echo site_url('storeExperiment')?>')">
+                   onclick="genGUID('storeExperiment')">
                Submit
            </button>
          </form>
