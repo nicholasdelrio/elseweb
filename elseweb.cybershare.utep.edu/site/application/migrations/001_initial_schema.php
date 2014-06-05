@@ -211,10 +211,6 @@ class Migration_Initial_schema extends CI_Migration{
             'datasetURI' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '100'
-            ),
-            'Eid_FK' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100'
             )
         );
         
@@ -223,7 +219,32 @@ class Migration_Initial_schema extends CI_Migration{
         $this->dbforge->create_table('ENVIRONMENT');  
    
         //hardcoded foreign keys
-        $this->db->query('ALTER TABLE ENVIRONMENT ADD FOREIGN KEY (Eid_FK) REFERENCES EXPERIMENT (Eid)');
+        echo "DONE<br/>";
+        
+        /********************************************************************/
+        
+        echo "Creating table 'EXPERIMENT_DATASETS'";
+        $fields = array(
+            'datasetURI_FK' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100'
+            ),
+            'Eid_FK' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100'
+            )
+            
+        );
+        
+        $this->dbforge->add_field($fields);
+        $this->dbforge->add_key('datasetURI_FK', TRUE);
+        $this->dbforge->add_key('Eid_FK', TRUE);
+        $this->dbforge->create_table('EXPERIMENT_DATASETS');  
+   
+        
+        //hardcoded foreign keys
+        $this->db->query('ALTER TABLE EXPERIMENT_DATASETS ADD FOREIGN KEY (datasetURI_FK) REFERENCES ENVIRONMENT (datasetURI)');
+        $this->db->query('ALTER TABLE EXPERIMENT_DATASETS ADD FOREIGN KEY (Eid_FK) REFERENCES EXPERIMENT (Eid)');
         echo "DONE<br/>";
         
         /********************************************************************/

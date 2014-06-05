@@ -37,7 +37,7 @@ class Experiment_model extends CI_Model {
             $this->db->insert('EXPERIMENT',$data);
 
             foreach ($decoded_json['specification']['algorithm']['parameterBindings'] as $param){
-                //Insert parameter name only if it doesn't exist un PARAMETER table
+                //Insert parameter name only if it doesn't exist in PARAMETER table
                 if($this->checkExistance('PARAMETER', 'Pname', $param['name'])==FALSE){
                     $data=array(
                            'Pname'    => $param['name'],
@@ -55,12 +55,19 @@ class Experiment_model extends CI_Model {
             }
 
             foreach($decoded_json['specification']['modelingScenario'] as $scenario){
-                //Insert experiment modeling scenarios (datasetURI)
+                 //Insert datasetURI only if it doesn't exist in ENVIRONMENT table
+                if($this->checkExistance('ENVIRONMENT', 'datasetURI', $scenario['datasetURI'])==FALSE){ 
+                    $data=array(
+                            'datasetURI' => $scenario['datasetURI']
+                     );
+                     $this->db->insert('ENVIRONMENT',$data); 
+                }
+                
                 $data=array(
-                        'datasetURI' => $scenario['datasetURI'],
-                        'Eid_FK'   => $Eid
-                 );
-                 $this->db->insert('ENVIRONMENT',$data);             
+                    'datasetURI_FK' => $scenario['datasetURI'],
+                    'Eid_FK'        => $Eid
+                );
+                $this->db->insert('EXPERIMENT_DATASETS',$data); 
             }
 
             //End of transaction

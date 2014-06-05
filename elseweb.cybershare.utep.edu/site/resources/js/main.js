@@ -17,8 +17,8 @@ function appendGUID(guid, base_url){
     experiment_json = $.parseJSON(experiment_json);
     experiment_json["specification"]["id"] = guid;
     experiment_json = JSON.stringify(experiment_json);
-    alert(guid);
-    alert(experiment_json);
+    //alert(guid);
+    //alert(experiment_json);
     storeExperiment(experiment_json, base_url);
 }
 
