@@ -2,8 +2,9 @@
 
 class Home extends MY_Controller {
 	
+    
 	public function index($renderData=""){	
-		
+                //$this->$data['token'] = $this->token();
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
@@ -19,4 +20,6 @@ class Home extends MY_Controller {
         $folder = 'template';
 		$this->_render('pages/home',$renderData, $folder);
 	}
+               
+        
 }

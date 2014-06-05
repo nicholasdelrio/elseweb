@@ -28,9 +28,10 @@
     <link href="<?php echo base_url(ASSETS."revolution_slider/css/rs-style.css");?>" rel="stylesheet" media="screen" />
     <link href="<?php echo base_url(ASSETS."revolution_slider/rs-plugin/css/settings.css");?>" rel="stylesheet" media="screen" />
     
+    <link href="<?php echo base_url(ASSETS."jquery-ui/css/custom-theme/jquery-ui-1.10.4.custom.min.css");?>" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-     <link rel="stylesheet" href="<?php echo base_url(CSS."style.css");?>">
+    <link rel="stylesheet" href="<?php echo base_url(CSS."style.css");?>">
     <link rel="stylesheet" href="<?php echo base_url(CSS."style-responsive.css");?>">
     
 
@@ -53,13 +54,17 @@
     <script src="<?php echo base_url(JS."jquery.easing.min.js");?>"></script>
     <script src="<?php echo base_url(JS."link-hover.js");?>"></script>
     <script src="<?php echo base_url(ASSETS."fancybox/source/jquery.fancybox.pack.js");?>"></script>
+    <script src="<?php echo base_url(ASSETS."noty/packaged/jquery.noty.packaged.min.js");?>"></script>
+    <script src="<?php echo base_url(ASSETS."noty/layouts/top.js");?>"></script>
+    <script src="<?php echo base_url(ASSETS."noty/themes/default.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url(ASSETS."revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url(ASSETS."revolution_slider/rs-plugin/js/jquery.themepunch.revolution.min.js");?>"></script>
-      
+    <script type="text/javascript" src="<?php echo base_url(ASSETS."jquery-ui/js/jquery-ui-1.10.4.custom.min.js");?>"></script>  
 
     <!--common script for all pages-->
     <script src="<?php echo base_url(JS."common-scripts.js");?>"></script>
     <script src="<?php echo base_url(JS."revulation-slide.js");?>"></script>
+    <script src="<?php echo base_url(JS."main.js");?>"></script>
 
    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&AMP;sensor=false"></script>
     

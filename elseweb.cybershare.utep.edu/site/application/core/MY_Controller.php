@@ -29,10 +29,14 @@ class MY_Controller extends CI_Controller{
 		$this->author = $this->config->item('site_author');
 		
 		$this->pageName = strToLower(get_class($this));
+                
+                $this->load->library(array('session','form_validation'));
+                $this->load->helper(array('url','form'));
+                $this->load->database('default');
 	}
 	 
 	
-	protected function _render($view,$renderData="FULLPAGE", $folder) {
+	protected function _render($view,$renderData="FULLPAGE", $folder) {    
         switch ($renderData) {
         case "AJAX"     :
             $this->load->view($view,$this->data);
@@ -78,4 +82,12 @@ class MY_Controller extends CI_Controller{
 		 break;
     }
 	}
+        
+    public function token(){
+        $token = md5(uniqid(rand(),true));
+        $this->session->set_userdata('token',$token);
+        return $token;
+    }
+        
+        
 }
