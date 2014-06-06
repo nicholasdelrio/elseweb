@@ -24,15 +24,19 @@ class Experiment_model extends CI_Model {
             //Get data for Experiment table
             $Eid = $decoded_json['specification']['id'];
             $EocurrendeDataID = $decoded_json['specification']['occurrenceDataID'];
+            $EresultURL = $decoded_json['executedSpecification']['experimentResult']['resultURL'];
+            $EprovinenceID = $decoded_json['executedSpecification']['experimentResult']['resultURI'];
             $Uusername = $this->session->userdata('username');
-            $Estatus = "success"; //hardcoded CHANGE THIS
+            $Estatus = $decoded_json['executedSpecification']['successful'];
             $this->db->set('Etimestamp', 'NOW()', FALSE);
             $data=array(
                 'Eid'=>$Eid,
                 'Aid_FK'=>$Aid,
                 'Uusername_FK'=>$Uusername,
                 'Estatus'=>$Estatus,
-                'EocurrenceDataID'=>$EocurrendeDataID
+                'EocurrenceDataID'=>$EocurrendeDataID,
+                'EresultURL' => $EresultURL,    
+                'EprovinenceID' => $EprovinenceID    
             );
             $this->db->insert('EXPERIMENT',$data);
 
@@ -78,7 +82,7 @@ class Experiment_model extends CI_Model {
             return false;
       }
        
-       if ($this->db->trans_status() == TRUE){
+       if ($this->db->trans_status() == TRUE && $Estatus === "true" ){
            return true;
        }
        else{

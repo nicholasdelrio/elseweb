@@ -60,7 +60,8 @@
     <script type="text/javascript" src="<?php echo base_url(ASSETS."revolution_slider/rs-plugin/js/jquery.themepunch.plugins.min.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url(ASSETS."revolution_slider/rs-plugin/js/jquery.themepunch.revolution.min.js");?>"></script>
     <script type="text/javascript" src="<?php echo base_url(ASSETS."jquery-ui/js/jquery-ui-1.10.4.custom.min.js");?>"></script>  
-
+    <script src="<?php echo base_url(JS."jquery.blockUI.js");?>"></script>
+    
     <!--common script for all pages-->
     <script src="<?php echo base_url(JS."common-scripts.js");?>"></script>
     <script src="<?php echo base_url(JS."revulation-slide.js");?>"></script>

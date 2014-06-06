@@ -2,6 +2,8 @@
 
 /* Experiment functions */
 function genGUID(base_url){
+    middleNoty('information', 'Submitting experiment...');
+    $.blockUI({ message: null });
     $.ajax({
     url: base_url + '/' + 'guid',
     success: function(response) { 
@@ -17,9 +19,40 @@ function appendGUID(guid, base_url){
     experiment_json = $.parseJSON(experiment_json);
     experiment_json["specification"]["id"] = guid;
     experiment_json = JSON.stringify(experiment_json);
-    //alert(guid);
+    //alert(guid);              
     //alert(experiment_json);
-    storeExperiment(experiment_json, base_url);
+    runExperiment(experiment_json, base_url);
+}
+
+
+function runExperiment(experiment_json, base_url){
+    $.ajax({
+        //need to do a cross domain post
+        'url' : 'http://visko.cybershare.utep.edu/elseweb-endpoint/JSONSpecification',
+        'type' : 'POST', //the way you want to send data to your URL
+        'data' : 'jsonSpec=' + experiment_json, 
+        'success' : function(result){ 
+            if(result){             
+                    //Merge experiment and result json
+                    experiment_json = $.parseJSON(experiment_json);
+                    var merged_json = $.extend({}, experiment_json, result);
+                    merged_json = JSON.stringify(merged_json);
+                    $.unblockUI();
+                    $.noty.closeAll();  
+                    //alert(merged_json);
+                    storeExperiment(merged_json, base_url);
+            }
+            else
+                topNoty('error', 'An error has ocurred.');
+        },
+        'error' : function(){
+                    $.noty.closeAll();
+                    $.unblockUI();
+                    topNoty('error', 'Oops! Something went wrong... try again later');
+        }
+            
+    });      
+    
 }
 
 
@@ -31,10 +64,10 @@ function storeExperiment(experiment_json, base_url){
         'success' : function(result){ 
             if(result){
                 if (result === 'success'){
-                    topNoty('success', 'Experiment information sucessfully stored!');
+                    topNoty('success', 'Experiment submitted successfully!');
                 }
                 else
-                    topNoty('warning', result);
+                    topNoty('error', 'Oops! something went wrong... try again later');
             }
             else
                 topNoty('error', 'An error has ocurred.');
@@ -127,3 +160,21 @@ function topNoty (type, text) {
         timeout: 1900
     });     
  }
+ 
+ function middleNoty(type, text){
+     noty({
+        layout: 'center',
+        type: type,
+        text: text,
+        dismissQueue: false, 
+        animation: {
+            open: {height: 'toggle'},
+            close: {height: 'toggle'},
+            easing: 'swing',
+            speed: 650 
+        },
+    });     
+ }    
+     
+     
+     

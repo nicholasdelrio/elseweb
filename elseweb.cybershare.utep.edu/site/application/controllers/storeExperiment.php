@@ -35,12 +35,13 @@ class StoreExperiment extends CI_Controller{
                 } 
                  */ 
           
+              
                if($this->experiment_model->store_experiment($a)){
                    echo "success";
                }
                 else{
-                    echo "Error Occured";
-               }
+                    echo "Error ocurred on execution... try again later.";
+               } 
            }
     }
     

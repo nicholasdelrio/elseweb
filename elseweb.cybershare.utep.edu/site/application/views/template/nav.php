@@ -32,7 +32,7 @@
                              </fieldset>
                             </form>
                               <hr/>
-                              <input type="button" value="Forgot Username or Password?"  class="btn-small btn-default"/>
+                              <!-- <input type="button" value="Forgot Username or Password?"  class="btn-small btn-default"/> -->
                               <input type="button" value="Login"  class="btn-small btn-default pull-right" onclick="userLogin('<?php echo site_url('login')?>')"/>
                               <a href="<?php echo site_url('register')?>">
                                   <input type="button" style="margin-right: 10px;" value="Register"  class="btn-small btn-default pull-right"/>
