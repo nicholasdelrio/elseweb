@@ -3,6 +3,11 @@
 	
 	<display-name>ELSEWeb Experiment Specification Submission</display-name>
 
+	<filter-mapping>
+    	<filter-name>CORS</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 	<servlet>
     	<servlet-name>JSONSpecification</servlet-name>
     	<servlet-class>edu.utep.cybershare.elseweb.experiment.JSONSpecification</servlet-class>
