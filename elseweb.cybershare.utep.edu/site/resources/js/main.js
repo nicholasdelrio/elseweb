@@ -57,6 +57,7 @@ function runExperiment(experiment_json, base_url){
 
 
 function storeExperiment(experiment_json, base_url){  
+    var html = ""; //Will store raw html with experiment results
     $.ajax({
         'url' : base_url + '/' + 'store',
         'type' : 'POST', //the way you want to send data to your URL
@@ -64,7 +65,23 @@ function storeExperiment(experiment_json, base_url){
         'success' : function(result){ 
             if(result){
                 if (result === 'success'){
+                    experiment_json = $.parseJSON(experiment_json);
                     topNoty('success', 'Experiment submitted successfully!');
+                    $('#endpoint_container').fadeOut('slow');
+                    $('#endpoint_container').empty();
+                    html += "<div class='row'>";
+                    html += "<div class='text-center feature-head'>";
+                    html +=  "<h3>ELSEWeb Experiment Specification Results</h3>";
+                    html += "</div>";
+                    html += "</div>";
+                    html += "<div class='row'>";
+                    html += "<div class='text-center col-md-12'>";
+                    html += "<p>Result URL: "+experiment_json['executedSpecification']['experimentResult']['resultURI']+" </p>";
+                    html += "</div>";
+                    html += "</div>"; 
+                    $('#endpoint_container').html( html );
+                    $('#endpoint_container').fadeIn()('slow');
+                    
                 }
                 else
                     topNoty('error', 'Oops! something went wrong... try again later');
@@ -75,6 +92,7 @@ function storeExperiment(experiment_json, base_url){
     });       
     
 }
+
 
 /* User Login functions */
 

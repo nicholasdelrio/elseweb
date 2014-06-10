@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container" id="endpoint_container">
     <div class="row">
         <div class="text-center feature-head">
             <h3>ELSEWeb Experiment Specification Submission</h3>

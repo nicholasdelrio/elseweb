@@ -48,6 +48,23 @@ class StoreExperiment extends CI_Controller{
            }
     }
     
+    public function viewResults(){
+        $this->form_validation->set_rules('experiment', 'JSON DATA', 'required|trim|xss_clean');
+        //throw error messages if we have any
+        if($this->form_validation->run() == FALSE){
+                echo validation_errors();
+	}
+        else{
+           $string_json =  $this->input->post('experiment');
+           $json = str_replace(array("\t","\n"), "", $string_json);
+           $this->data = json_decode($json, true);
+           
+           //Render Endpoint view again with json data
+           $this->load->view('endpoint',$this->data);          
+        }
+            
+    }
+    
     public function guid(){
        if (function_exists('com_create_guid')){
         echo trim(com_create_guid(),'{}');
