@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class TestJson extends MY_Controller {
+class Endpoint extends MY_Controller {
 	
     
 	public function index($renderData=""){	
@@ -10,16 +10,24 @@ class TestJson extends MY_Controller {
 		 */
          
          
-		$this->title = "ELSEWeb | json test";
+		$this->title = "ELSEWeb | Experiment Submission";
 		$this->keywords = "elseweb, cybershare, species modeling, species modelling";
 		
         // 1. when you pass AJAX to renderData it will generate only that particular PAGE skipping other parts like header, nav bar,etc.,
         //      this can be used for AJAX Responses
         // 2. when you pass JSON , then the response will be json object of $this->data.  This can be used for JSON Responses to AJAX Calls.
         // 3. By default full page will be rendered
-        $folder = 'template';
-		$this->_render('pages/testJson',$renderData, $folder);
-	}
-               
+                
+            if ($this->session->userdata('is_logged_in')){          
+                $folder = 'template';
+                $this->_render('pages/endpoint',$renderData, $folder);     
+            }
+            else{
+                $folder = 'template';
+                $this->_render('pages/register',$renderData, $folder);   
+
+            }
         
+        }    
 }
+

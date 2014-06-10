@@ -15,6 +15,7 @@ class Experiments extends MY_Controller {
         //      this can be used for AJAX Responses
         // 2. when you pass JSON , then the response will be json object of $this->data.  This can be used for JSON Responses to AJAX Calls.
         // 3. By default full page will be rendered
+         
         $folder = 'template';
 		$this->_render('pages/experiments',$renderData,'template');
 	}

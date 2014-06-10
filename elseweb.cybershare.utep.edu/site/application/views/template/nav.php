@@ -21,13 +21,13 @@
                         <li class="dropdown <?php echo isActive($pageName,"login/new_user")?>" id="menuLogin">
                           <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
                           <div class="dropdown-menu pull-right" style="padding:10px;">
-                            <form  class="form-inline" role="form" method="post" id="loginForm" name="loginForm" action="">
+                            <form  role="form" method="post" id="loginForm" name="loginForm" action="">
                              <fieldset>
                              <div class="form-group">
-                                <input type="text" placeholder="Username" style="margin-top: 8px" size="20" id="username" name="username"/>
+                                <input type="text" placeholder="Username" style="margin-top: 4px" id="username" name="username"/>
                              </div>
                              <div class="form-group">
-                                 <input type="password" placeholder="Password"  style="margin-top: 8px" size="20" id="password" name="password"/><br/>
+                                 <input type="password" placeholder="Password"  style="margin-top: 4px" id="password" name="password"/><br/>
                              </div>
                              </fieldset>
                             </form>
