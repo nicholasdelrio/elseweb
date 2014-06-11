@@ -74,11 +74,25 @@ function storeExperiment(experiment_json, base_url){
                     html +=  "<h3>ELSEWeb Experiment Specification Results</h3>";
                     html += "</div>";
                     html += "</div>";
+                    html += "<div class='property gray-bg'>";
                     html += "<div class='row'>";
-                    html += "<div class='text-center col-md-12'>";
-                    html += "<p>Result URL: "+experiment_json['executedSpecification']['experimentResult']['resultURI']+" </p>";
+                    html += "<div class='col-md-8 col-md-offset-2'>";
+                    html += "<p>Experiment ID: "+experiment_json['specification']['id']+" </p>";
+                    html += "<p>Success: "+experiment_json['executedSpecification']['successful']+" </p>";
+                    html += "<p>Result URL: <a href='"+experiment_json['executedSpecification']['experimentResult']['resultURL']+"' target='_blank'>"+experiment_json['executedSpecification']['experimentResult']['resultURL']+"</a></p>";
+                    html += "<p>Result URI: <a href='"+experiment_json['executedSpecification']['experimentResult']['resultURI']+"' target='_blank'>"+experiment_json['executedSpecification']['experimentResult']['resultURI']+"</a></p>";
                     html += "</div>";
                     html += "</div>"; 
+                    html += "</div>"; 
+                    html += "<div class='row'>";
+                    html += "<div class='text-center col-md-4 col-md-offset-2'>";
+                    html += "<a href='endpoint'><button type='button' class='btn btn-purchase'>New Experiment</button></a>";
+                    html += "</div>";
+                    html += "<div class='text-center col-md-4'>";
+                    html += "<a href=''><button type='button' class='btn btn-default'>Experiment History</button></a>";
+                    html += "</div>";
+                    html += "</div>";
+                    html += "</div>";
                     $('#endpoint_container').html( html );
                     $('#endpoint_container').fadeIn()('slow');
                     

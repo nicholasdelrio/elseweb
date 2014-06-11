@@ -19,7 +19,7 @@
 
                        <?php if(!$this->session->userdata('is_logged_in')) { ?>
                         <li class="dropdown <?php echo isActive($pageName,"login/new_user")?>" id="menuLogin">
-                          <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+                          <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login <b class="caret"></b></a>
                           <div class="dropdown-menu pull-right" style="padding:10px;">
                             <form  role="form" method="post" id="loginForm" name="loginForm" action="">
                              <fieldset>
@@ -40,8 +40,13 @@
                           </div>
                         </li>
                        <?php } else {?>
-                       <li class="<?php echo isActive($pageName,"login")?>"><a href="<?php echo site_url('login/logout_ci') ?>">Logout</a></li>
-                        
+                       <li class="dropdown" id="userMenu">  
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="userName"><?php echo $this->session->userdata('username') ?> <b class="caret"></b></a>    
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo site_url('') ?>">Experiment History</a></li>
+                                <li><a href="<?php echo site_url('login/logout_ci') ?>">Logout</a></li>                             
+                            </ul>
+                       </li> 
                        <?php } ?> 
                         
                         <!--
