@@ -1,3 +1,6 @@
+<!-- Required Javascript files -->
+<script type="text/javascript" src="<?php echo base_url(JS."endpoint.js");?>"></script>
+
 
 <div class="container" id="endpoint_container">
     <div class="row">

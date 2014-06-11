@@ -43,7 +43,7 @@
                        <li class="dropdown" id="userMenu">  
                             <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="userName"><?php echo $this->session->userdata('username') ?> <b class="caret"></b></a>    
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo site_url('') ?>">Experiment History</a></li>
+                                <li><a href="<?php echo site_url('history') ?>">Experiment History</a></li>
                                 <li><a href="<?php echo site_url('login/logout_ci') ?>">Logout</a></li>                             
                             </ul>
                        </li> 

@@ -1,8 +1,10 @@
+
+<!-- javascript specific includes -->
 <script type="text/javascript">
   var disc_url = '<?php echo site_url('register/get_discipline'); ?>';    
   var org_url = '<?php echo site_url('register/get_organization'); ?>'; 
 </script>
-
+<script type="text/javascript" src="<?php echo base_url(JS."register.js");?>"></script>
 
 <!--container start-->
  <div class="container register">
@@ -71,16 +73,6 @@
                          onclick="userRegister('<?php echo site_url('login')?>')">
                 </div>
               </div>
-              
-              <!--  
-              <div class="form-group has-error">
-                <label class="col-md-2 control-label">Input error</label>
-                <div class="col-md-10">
-                  <input type="text" class="form-control" id="inputError" placeholder="Input Error">
-                  <i class="icon-pencil input-icon error"></i>
-                </div>
-              </div>
-              -->
             </form>
           </div>
         </div>
