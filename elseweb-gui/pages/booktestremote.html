@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Cross Domain Requests</title>
+<script>
+
+var csvString1 = 'LocalId,Longitude,Latitude,CanonicalName,CatalogNum,CollectionCode,CollectionDate,Collector,Guid, InstitutionCode,ModTime,ProviderName,ResourceName 1000,-144.09,31.15,"Sample Name","N1000","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid1","Sample Institution","2009-05-01 11:03:00","Sample Provider","Sample Resource" 1001,-1.8,-42.51,"Sample Name","N1001","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid2","Sample Institution","2009-05-01 11:03:30","Sample Provider","Sample Resource" 1002,-60.66,-10.26,"Sample Name","N1002","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid3","Sample Institution","2009-05-01 11:03:45","Sample Provider","Sample Resource" 1003,-14.28,5.92,"Sample Name","N1003","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid4","Sample Institution","2009-05-01 11:04:00","Sample Provider","Sample Resource" 1004,-155.04,-37.04,"Sample Name","N1004","Sample Collection Code","2009-05-01","Sample Collector","http://example.com/guid5","Sample Institution","2009-05-01 11:04:01","Sample Provider","Sample Resource"'; 
+var lifemapperSpecies = 'http://lifemapper.org/services/sdm/occurrences/json';
+var url = "http://visko.cybershare.utep.edu/sparql?default-graph-uri=&query=";
+var sOccurrenceURL = url + "prefix+lifemapper%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper.owl%23%3E%0D%0Aprefix+data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0A%0D%0Aselect+%3Fid%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Flifemapper%2Foccurrences%2Fspecies-occurrences.owl%3E%0D%0Awhere%7B%0D%0A%3Fdataset+a+lifemapper%3ASpeciesOccurrenceDataset.%0D%0A%3Fdataset+data%3AhasLayer+%3Flayer.%0D%0A%3Fdataset+data%3AhasManifestation+%3Fmanif.%0D%0A%3Fmanif+data%3AhasFileDownloadURL+%3FfileURL.%0D%0A%3Fmanif+data%3AhasLandingPageURL+%3FmetadataURL.%0D%0A%3Flayer+data%3AcontainsFeatureSet+%3Fset.%0D%0A%3Fset+a+lifemapper%3ASpeciesOccurrenceSet.%0D%0A%3Fset+lifemapper%3AhasOccurrenceSetID+%3Fid.%0D%0A%3Fset+lifemapper%3AhasOccurrenceOfSpecies+%3Fspecies.%0D%0A%3Fspecies+lifemapper%3AhasGenusName+%22" + "Agrypon" + "%22%5E%5E%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23string%3E.%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+
+function sendRequest() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","sOccurrenceURL",true);
+    xhr.onload = function(){handleResponse(xhr);};
+    xhr.send(null);
+}
+
+function handleResponse(xhr) {
+    document.getElementById("message").innerHTML = xhr.responseText;
+}
+
+window.onload = function(){
+    document.getElementById("btnSend").onclick = sendRequest;
+};
+
+</script>
+</head>
+<body>
+<h1>Ajax Cross Domain</h1>
+<form>
+<input type="button" id="btnSend" value="Send Request">
+</form>
+<br><br>
+<div id="message"></div>
+</body>
+</html>

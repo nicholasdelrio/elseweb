@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ELSEWeb GUI</title>
+    <meta charset="utf-8">
+    <link href="../styles/examples-offline.css" rel="stylesheet">
+    <link href="../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../styles/kendo.rtl.min.css" rel="stylesheet">
+    <link href="../styles/kendo.flat.min.css" rel="stylesheet">
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/kendo.web.min.js"></script>
+    <script src="../js/console.js"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCotZjhwqwQ-4UjBvZHJNrQK0Yew5M2sOQ&sensor=true"></script>  
+	
+
+    <!-- NO ENTER -->
+	<!-- Code to avoid reloading the page when user clicks enter -->
+	<script>
+		function noEnter() {
+			return !(window.event && window.event.keyCode == 13); 
+		}
+	
+
+		function enter(nextfield) {
+			if(window.event && window.event.keyCode == 13) {
+				nextfield.focus();
+				return false; 
+			}
+			else
+				return true; 
+		}
+	</script>
+	
+	    <div id="main-window" class="k-content"> 
+		<div id="window">
+		 <div id="horizontal" style="height: 100%; width: 100%;">
+				
+				<div id="left-pane">
+				
+				<!-- Region Section -->
+				<fieldset>
+				<legend>Region</legend>
+				<div class="k-grouping-header" data-role="droptarget" style="width: 640px">Enter coordinates or drag point in map to set bounding box for the experiment</div>
+				<label><input type="textbox" id="boundsText"  class="k-textbox" style= "width: 645px; font-size: 11.5px; color: grey;" placeholder= "e.g. 50, -65.123, 23, -126 (N, E, S, W) (Press the 'TAB' key)" title="N, E, S, W" onchange="changeBounds()" onkeypress="return noEnter()"/> </label> 
+
+				<br>
+				<div id="map-canvas" class="map" style="width:645px"></div>
+				
+				<br>
+				</fieldset>
+							
+				<!-- Species Section -->
+				<fieldset>
+				<legend>Species</legend>
+				<div class="k-grouping-header" data-role="droptarget" style="width: 640px">Select species OR upload your own species file</div>
+					<form method="post" action="submit" style="width:98%">
+						<input id="species" style="width: 300px"/> or <input name="files" id="files" type="file" /> 
+					<br><br>					
+					</form>
+					<br>
+				</fieldset>
+				</div>				
+				
+				<div id="center-pane">
+				
+				<!-- Data Form -->		
+				<fieldset>
+				<legend>Data</legend>
+				<div class="k-grouping-header" data-role="droptarget" style="width: 598px">Select up to 10 data sets </div>
+				<!-- data-table -->
+				<div id="grid" style= "height:530px; width: 601px;"></div>
+				<!-- end data-table -->
+				</fieldset>
+			
+				<!-- Algorithm Section -->
+				<fieldset>
+				<legend>Algorithm</legend>
+				
+				<div class="k-grouping-header" data-role="droptarget" style="width: 598px">Select algorithm and modify parameters' values (default value shown)</div>
+				<div id="parameterGrid" style= "height:270px; width: 601px;"></div>
+				</fieldset>
+				</div>
+				
+				
+				<div id="right-pane">
+				<!-- Model Section -->
+				<fieldset>
+				<legend>Model</legend>
+				<div class="k-grouping-header" data-role="droptarget" style="width: 530px">Submit experiment</div>
+				<div id="example" class="k-content">
+				<div class="demo-section">
+				
+					<h3 class="title">Status</h3>
+					<div id="progressBar"></div>
+					<div class="console"></div>
+					<br>
+
+				<br>
+				<br>
+				</div>
+					<button id="startProgress" class="k-button" style="float: right;">Submit</button>
+				</div>	
+				<br>
+				<div class="demo-section">			
+					<input type="textbox" id="urlText"  class="k-textbox" style= "width: 400px; font-size: 11.5px; color: grey;" placeholder= "Lifemapper experiment URL" title=""  onkeypress="return noEnter()"/>
+				</div>	
+				<br><br><br><br>		
+
+				</fieldset>
+				</div>
+
+
+			</div>
+		</div>			
+	</div>	
+	
+    
+</head>
+<body>	
+
+	<!-- PARAMETER GRID -->	
+	<!-- Adds algorithm toolbar and dropdownlist to parameter's grid -->
+	<script type="text/x-kendo-template" id="template"> 
+        <div class="toolbar">
+            <label class="category-label" for="category"> Algorithm:</label>
+            <input type="search" id="category" style="width: 390px"/>
+        </div>
+	</script>
+	
+	<script>	
+	/* "Global" variable definition */
+	var rectangle, map, infoWindow, infoWindowBox;
+	var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(0, 0), new google.maps.LatLng(0, 0)); 
+	var north = [];
+	var east = [];
+	var south = [];
+	var west = [];
+	var url = "http://visko.cybershare.utep.edu/sparql?default-graph-uri=&query=";
+	var sw, ne, nw, se;
+	var userBounds, boundsArray;
+	
+	//Query URLs (added "=callback?" at the end for JSONP remote data request and binding to kendo widgets)
+	var entURL,charURL, sourceURL;
+	var speciesURL = url + "prefix+lifemapper%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper.owl%23%3E%0D%0Aprefix+data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0A%0D%0Aselect+%3Fname%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Flifemapper%2Foccurrences%2Fspecies-occurrences.owl%3E%0D%0Awhere%7B%0D%0A%3Fdataset+a+lifemapper%3ASpeciesOccurrenceDataset.%0D%0A%3Fdataset+data%3AhasLayer+%3Flayer.%0D%0A%3Fdataset+data%3AhasManifestation+%3Fmanif.%0D%0A%3Fmanif+data%3AhasFileDownloadURL+%3FfileURL.%0D%0A%3Fmanif+data%3AhasLandingPageURL+%3FmetadataURL.%0D%0A%3Flayer+data%3AcontainsFeatureSet+%3Fset.%0D%0A%3Fset+a+lifemapper%3ASpeciesOccurrenceSet.%0D%0A%3Fset+lifemapper%3AhasOccurrenceSetID+%3Fid.%0D%0A%3Fset+lifemapper%3AhasOccurrenceOfSpecies+%3Fspecies.%0D%0A%3Fspecies+lifemapper%3AhasGenusName+%3Fname.%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+	var paramGridURL = url + "prefix+modelling%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-modelling.owl%23%3E%0D%0Aprefix+parameters%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper-parameters.owl%23%3E%0D%0Aprefix+lifemapper%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper.owl%23%3E%0D%0A%0D%0Aselect+distinct+%3FalgorithmURI+%3FalgorithmName+%3FparamName+%3Fdefault+%3Fminimos+%3Fmaximos+%28datatype%28%3Fdefault%29+as+%3Fdatatype%29%0D%0A%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Flifemapper%2Fparameter-descriptions%2Fparameter-descriptions.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3FalgorithmURI+a+lifemapper%3ALifemapperAlgorithm.%0D%0A%3FalgorithmURI+modelling%3AhasAlgorithmName+%3FalgorithmName.%0D%0A%3Fparams+lifemapper%3AdescribesBehaviorOf+%3FalgorithmURI.%0D%0A%3Fparams+lifemapper%3AhasParameterDescription+%3FparamDescription.%0D%0A%0D%0A%3FparamDescription+modelling%3AhasParameterName+%3FparamName.%0D%0A%3FparamDescription+lifemapper%3AhasDefaultValue+%3Fdefault.%0D%0Aoptional%7B%3FparamDescription+lifemapper%3AhasLowerBoundInclusive+%3Fminimos.%7D%0D%0Aoptional%7B%3FparamDescription+lifemapper%3AhasUpperBoundInclusive+%3Fmaximos.%7D%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+	var algorithmName = url + "prefix+modelling%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-modelling.owl%23%3E%0D%0Aprefix+parameters%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper-parameters.owl%23%3E%0D%0Aprefix+lifemapper%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper.owl%23%3E%0D%0A%0D%0Aselect+distinct+%3FalgorithmName%0D%0A%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Flifemapper%2Fparameter-descriptions%2Fparameter-descriptions.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3FalgorithmURI+a+lifemapper%3ALifemapperAlgorithm.%0D%0A%3FalgorithmURI+modelling%3AhasAlgorithmName+%3FalgorithmName.%0D%0A%3Fparams+lifemapper%3AdescribesBehaviorOf+%3FalgorithmURI.%0D%0A%3Fparams+lifemapper%3AhasParameterDescription+%3FparamDescription.%0D%0A%0D%0A%3FparamDescription+modelling%3AhasParameterName+%3FparamName.%0D%0A%3FparamDescription+lifemapper%3AhasDefaultValue+%3Fdefault.%0D%0Aoptional%7B%3FparamDescription+lifemapper%3AhasLowerBoundInclusive+%3Fmin.%7D%0D%0Aoptional%7B%3FparamDescription+lifemapper%3AhasUpperBoundInclusive+%3Fmax.%7D%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+	var algorithmURI = url + "prefix+modelling%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-modelling.owl%23%3E%0D%0Aprefix+parameters%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper-parameters.owl%23%3E%0D%0Aprefix+lifemapper%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper.owl%23%3E%0D%0A%0D%0Aselect+distinct+%3FalgorithmURI%0D%0A%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Flifemapper%2Fparameter-descriptions%2Fparameter-descriptions.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3FalgorithmURI+a+lifemapper%3ALifemapperAlgorithm.%0D%0A%3FalgorithmURI+modelling%3AhasAlgorithmName+%3FalgorithmName.%0D%0A%3Fparams+lifemapper%3AdescribesBehaviorOf+%3FalgorithmURI.%0D%0A%3Fparams+lifemapper%3AhasParameterDescription+%3FparamDescription.%0D%0A%0D%0A%3FparamDescription+modelling%3AhasParameterName+%3FparamName.%0D%0A%3FparamDescription+lifemapper%3AhasDefaultValue+%3Fdefault.%0D%0Aoptional%7B%3FparamDescription+lifemapper%3AhasLowerBoundInclusive+%3Fmin.%7D%0D%0Aoptional%7B%3FparamDescription+lifemapper%3AhasUpperBoundInclusive+%3Fmax.%7D%0D%0A%7D&format=tapplication%2Fjson&timeout=0&debug=on&callback?";
+	var selectedSpecies;
+	
+	/* WINDOW PROPERTIES */
+	$(document).ready(function () {
+		var window = $("#window"),
+            undo = $("#undo")
+            .bind("click", function() {
+				window.data("kendoWindow").open();
+				undo.hide();
+            });
+
+			var onClose = function() {
+				undo.show();
+            }
+
+            if (!window.data("kendoWindow")) {
+				window.kendoWindow({
+					width: "1890px",
+					height: "708px",
+					scrollable: false,
+					draggable: true,
+					resizable: false,
+					title: "ELSEWeb",
+					visible: false,
+					actions: [
+						"Minimize",
+                        "Close"
+					],
+					close: onClose
+                });
+				window.data("kendoWindow").center();
+				window.data("kendoWindow").open();
+            }
+	});	
+		
+	
+	/* SPLITTER */
+	<!-- Panes to divide window into 3 sections (Region/Species, Data/Algorithm, and Model)-->
+	$(document).ready(function() {
+		$("#horizontal").kendoSplitter({
+			panes: [
+				{ collapsible: false, resizable: false, size: "670px"},
+				{ collapsible: false, resizable: false, size: "630px"},
+				{ collapsible: false, resizable: false, size: "550px"}
+			]
+		});
+    });
+
+	
+	/* PROGRESS BAR */
+	$(document).ready(function () {	
+        $("#progressBar").kendoProgressBar({
+            type: "chunk",
+            chunkCount: 4,
+            min: 0,
+            max: 5,
+            value: 0,
+			change:onChange,
+            complete: onComplete
+        });
+    });
+
+        function onChange(e) {
+			kendoConsole.log(" -------------------------  ");
+        }
+
+        function onComplete(e) {
+            $("#startProgress").text("Done");
+        }
+
+        $("#startProgress").click(function () {
+            if (!$(this).hasClass("k-state-disabled")) {
+                $(this).addClass("k-state-disabled");
+                progress();
+            }
+        });
+
+        function progress() {
+			$(".title").html("SERVICE ORCHESTRATION STAGE");
+			var pb = $("#progressBar").data("kendoProgressBar");
+			pb.value(0);
+			pb.value(1);
+			getExperiment();
+			pb.value(3);
+			pb.value(4);
+			
+			
+			var interval = setInterval(function () {
+				if (pb.value() < 10) {
+					pb.value(pb.value() + 1);
+				} else {
+					clearInterval(interval);
+				}
+			}, 100);
+			//pb.value(5);
+		}
+
+	
+	/* GOOGLE MAPS */	
+	//Set map properties such as center, zoom, and type 
+	function initialize() {
+		var mapOptions = {
+			center: new google.maps.LatLng(0, 0),
+			zoom: 2,
+			mapTypeId: google.maps.MapTypeId.SATELLITE
+		};
+		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+		// Define the rectangle (bounding box) and set its editable property to true.
+		rectangle = new google.maps.Rectangle({
+			bounds: bounds,
+			editable: true,
+			draggable: true,
+			fillColor: '#FF9900',
+			fillOpacity: .5,
+			strokeColor: '#FF9900',
+			strokeWeight: 1,
+			strokeOpacity: 1
+		});
+		rectangle.setMap(map);
+
+		// Add an event listener on the rectangle.
+		google.maps.event.addListener(rectangle, 'bounds_changed', showNewRect);
+
+		// Define an info window on the map.
+		infoWindow = new google.maps.InfoWindow();
+		infoWindowBox = new google.maps.InfoWindow();
+	}
+	
+	// Show the new coordinates for the rectangle in an info window and textbox
+	// @this {google.maps.Rectangle} 
+	function showNewRect(event) {
+		ne = rectangle.getBounds().getNorthEast();
+		sw = rectangle.getBounds().getSouthWest();
+		nw = new google.maps.LatLng(ne.lat(), sw.lng());
+		se = new google.maps.LatLng(sw.lat(), ne.lng());
+		north[0] = ne.lat();
+		east[0] = ne.lng();
+		south[0] = sw.lat();
+		west[0] =	sw.lng();
+		
+		var contentString = 'NE: ' + north[0] + ', ' + east[0] + '<br>' + 'SW: ' + south[0] + ', ' + west[0];
+		var textboxString = north[0] + ', ' + east[0] + ', ' + south[0] + ', ' + west[0];
+
+		
+		entURL = url + "prefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aselect+distinct+%3Fentity%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0Afilter%28%3Fllon+%3C%3D+"
+					+ west[0] + 
+					"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
+					+ east[0] + 
+					"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
+					+ south[0] +
+					"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
+					+ north[0] + 
+					"%29%0D%0A%3Fdataset+elseweb-data%3AhasDataBand+%3Fband.%0D%0A%3Fband+elseweb-data%3ArepresentsEntity+%3Fentity.%0D%0A%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+			
+		//Define charURL and sourceURL here to use coordinate variables 
+		//TODO: Check variable scope
+		charURL = url + "prefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aselect+distinct+%3Fchar%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
+					+ west[0] +
+					"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
+					+ east[0] +
+					"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
+					+ south[0] +
+					"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
+					+ north[0] +
+					"%29%0D%0A%0D%0A%3Fdataset+elseweb-data%3AhasDataBand+%3Fband.%0D%0A%3Fband+elseweb-data%3AencodingOfCharacteristic+%3Fchar%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+		
+		sourceURL = url + "define+input%3Ainference+%22http%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Fmappings%2Felseweb-mappings.owl%22%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+provo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0Aselect+distinct+%3Fsource%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
+					+ west[0] +
+					"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
+					+ east[0] +
+					"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
+					+ south[0] +
+					"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
+					+ north[0] +
+					"%29%0D%0A%0D%0A%3Fdataset+elseweb-data%3AhasDataBand+%3Fband.%0D%0A%3Fband+provo%3AwasGeneratedBy+%3Factivity.%0D%0A%3Factivity+provo%3AwasAssociatedWith+%3Fsource%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+	
+			
+		// Set the info window's content and position.
+		// Change textbox value 
+		document.getElementById("boundsText").value = textboxString;
+		
+		//Request to check if there is any data in the selected region using the entity query URL and display infoWindow in the map.
+		$.ajax({  
+			type: "GET",
+			url: entURL,  
+			dataType: "jsonp",  
+			success: function(data) { 
+				if(data.results.bindings == ""){
+					infoWindow.setContent('<div><div style="color:#FF0000; font-size:13px; font-weight:bold;width:100%;">' + "No data available. Please change coordinates" +  '<br></div></div>' + contentString );
+					infoWindow.setPosition(ne);
+
+					infoWindow.open(map);
+				}
+				else{
+					infoWindow.setContent('<div><div style="color:#000000; font-size:13px; font-weight:bold;width:100%;">' + "Data available" + '<br></div></div>' + contentString);
+					infoWindow.setPosition(ne);
+
+					infoWindow.open(map);
+				}			
+			}  
+		}); 
+	}
+	
+	//gets user input and creates a rectangle with given bounds
+	function changeBounds(){
+		userBounds = document.getElementById("boundsText").value;
+		boundsArray = userBounds.split(",");
+			north = boundsArray[0];
+			east = boundsArray[1];
+			south = boundsArray[2];
+			west = boundsArray[3];
+		
+		bounds = new google.maps.LatLngBounds(
+			new google.maps.LatLng(south, west),
+			new google.maps.LatLng(north, east)
+		);
+		initialize();
+	}
+	
+	//Displays the map
+	google.maps.event.addDomListener(window, 'load', initialize);	
+	
+	
+	/* DATA GRID */	
+	//TODO: Change entURL to include start and end date (cascade)
+	//TODO: Change charURL and add selected entity (cascade) 
+	//TODO: Change sourceURL and add selected characteristic (cascade) 
+	
+		
+	$(document).ready(function () {
+		//Creating datasource structure for data grid.
+		//TODO: After adding cascade functionality, add validation to each field (use kendo notification ui widget)
+        dataSource = new kendo.data.DataSource({
+			data: [],
+			pageSize: 5,
+            schema: {
+            model: {
+            id: "DataSetID",
+            fields: {
+                DataSetID: { editable: false, nullable: true },
+				StartDate: { validation: { required: false } },
+                EndDate: { validation: { required: false } },
+                EntityName: { validation: { required: false } },
+				CharacteristicName: { validation: { required: false } },
+				SourceName: { validation: { required: false } },
+					}
+				}
+			}
+		});
+
+		/*
+		*	Trying to create a function to add cascade functionality to grid. (Use Kendo Grid CURRENT, SETDATASOURCE, COLUMN EDITOR methods and Datasource CHANGE, BIND, and FETCH methods combined with Dropdownlist methods)
+	    *	Grid documentation: http://docs.telerik.com/kendo-ui/api/web/grid#methods-setDataSource
+		* 	Datasource documentation: http://docs.telerik.com/kendo-ui/api/framework/datasource#events-change
+		*  	Dropdownlist documentation: http://docs.telerik.com/kendo-ui/api/web/dropdownlist
+		
+		function onChange(arg) {
+			var selected = $.map(this.select(), function(item) {
+			return $(item).text();
+        });
+
+			kendoConsole.log("Selected: " + selected.length + " item(s), [" + selected.join(", ") + "]");
+        }
+		*/
+		
+
+		//Editors to populate grid		
+		function dateEditor(container, options) {
+			$('<input data-text-field= " ' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '"/>').appendTo(container).kendoDatePicker({});
+		}
+		
+		//Entity dropdownlist inside data grid	
+		function entityDropDownEditor(container, options) {
+			$('<input required data-text-field="entity.value.slice(59)" data-value-field="entity.id" data-bind="value:' + options.field + '"/>')
+			.appendTo(container)
+			.kendoDropDownList({
+				autoBind: true,
+				dataTextField: "entity.value.slice(59)",  //gets entity section from bindings in json's query result, then slice it to show only the entity name and not the URI
+				dataValueField: "entity.id",								
+				dataSource: {
+					transport: {
+						read: {
+							dataType: 'jsonp',  //JSONP to bind remote data
+							url:entURL  //TODO: change to add dates
+						}
+					},	
+					schema: {
+						data: "results.bindings" //Get "bindings" section of the json's query result
+					}
+				},
+				optionLabel: { "entity": {"value": "http://visko.cybershare.utep.edu/linked-data/edac/services/-- select --"}}	
+			});
+		}
+					
+		//Characteristic dropdownlist inside data grid					
+		function charDropDownEditor(container, options) {
+			$('<input required data-text-field="char.value.slice(59)" data-value-field="char.id" data-bind="value:' + options.field + '"/>')
+			.appendTo(container)
+			.kendoDropDownList({
+				autoBind: true,
+				dataTextField: "char.value.slice(59)",
+				dataValueField: "char.id",
+				dataSource: {
+					transport: {
+						read: {
+							dataType: 'jsonp',
+							url: charURL	//TODO: Change to add dates and selected entity
+						}
+					},	
+					schema: {
+						data: "results.bindings"
+					}
+				},
+				optionLabel: { "char": {"value": "http://visko.cybershare.utep.edu/linked-data/edac/services/-- select --"}}	
+			});
+		}	
+					
+
+		//Source dropdownlist inside data grid				
+		function sourceDropDownEditor(container, options) {
+			$('<input required data-text-field="source.value.slice(59)" data-value-field="source.id" data-bind="value:' + options.field + '"/>')
+			.appendTo(container)
+			.kendoDropDownList({
+				autoBind: true,
+				dataTextField: "source.value.slice(59)",
+				dataValueField: "source.id",
+				dataSource: {
+					transport: {
+						read: {
+							dataType: 'jsonp',
+							url:sourceURL	//Change to add selected characteristics to the query
+						}
+					},	
+					schema: {
+						data: "results.bindings"
+					}
+				},
+				optionLabel: { "source": {"value": "http://visko.cybershare.utep.edu/linked-data/edac/services/-- select --"}}	
+			});
+		}						
+		
+		//Grid populated with previously defined datasource and editors.
+        $("#grid").kendoGrid({
+            dataSource: dataSource,
+            pageable: false,
+			scrollable: true,	
+            height: 300,
+            toolbar: [{ name: "create", text: "Add data set"}],
+			autoBind: false,
+            columns: [
+				{ field: "start", title:"Start", width: "50px", editor: dateEditor, format: "{0:yyyy-MM-dd}" },
+				{ field: "end", title:"End", width: "50px", editor: dateEditor, format: "{0:yyyy-MM-dd}"  },
+				{ field:"entity", title: "Entity", width: "55px", editor: entityDropDownEditor },
+                { field: "characteristic", title:"Characteristic", width: "63px", editor: charDropDownEditor  },
+                { field: "source", title:"Source", width: "55px", editor: sourceDropDownEditor  },
+				{ command: [ { className: "k-delete-button", name: "destroy", text:""}], title: "&nbsp;", width: "37px" }
+			],
+            editable: true
+        });
+		
+		dataSource.fetch();
+    });	
+
+
+	/* SPECIES */	
+	//Species file upload
+	//File Upload documentation: http://demos.telerik.com/kendo-ui/web/upload/index.html 
+	//http://docs.telerik.com/kendo-ui/api/web/upload
+	
+	$(document).ready(function() {
+        $("#files").kendoUpload({
+			localization: {
+				select: "Browse:"
+			},
+			enabled: true
+		});
+    });
+		
+	
+    /* PARAMETER GRID */
+	var maximos = "maximos.value";
+    var minimos = "minimos.value";
+    
+	$(document).ready(function() {
+		//Data contained in grid
+		paramDataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+					dataType: "jsonp",
+					//AlgorithmName, ALgorithmURI, Parameters, min value, max, value, and default query url
+					url: paramGridURL
+				}
+			},
+            schema: {
+				data: "results.bindings", //gets json bindings section
+				total: "count",
+				model: {
+					fields: {
+						"paramName.value": { editable: false, nullable: false }, //gets json paraName value
+						"default.value": { type: "number", editable: true, nullable: false }, //editable set to true to modify parameter's value
+						"mini": { editable: false },
+						"maxi": { editable: false },
+						"datatype.value.slice(33)": { editable: false, nullable: false }
+					}
+				}
+            }
+        }); 
+		
+		//PARAMETER GRID with paramDataSource	
+		var paramGrid = $("#parameterGrid").kendoGrid({
+            dataSource: [], //no datasource until setDataSource method is called in order to populate grid with filtered data by selected algorithm
+			toolbar: kendo.template($("#template").html()), //created a template to add the Algorithmn's dropdownlist bar on top of grid's columns
+            height: 250,
+            columns: [
+				{ field:"paramName.value", title: "Parameter", width: 100},
+				{ field:"default.value", title: "Value", width: 100},
+				{ field: "mini", title: "Min", width: 100, template:"#= (minimos == 'undefined') ? minimos = 25 : minimos.value #"},
+				{ field: "maxi", title: "Max", width: 100, template:"#= (maximos == 'undefined') ? maximos = 25 : maximos.value #"},
+				{ field:"datatype.value.slice(33)", title: "Type", width: 100}
+			],
+			editable: true
+        });
+					
+		//Dropdownlist with algorithms					
+		var dropDown = paramGrid.find("#category").kendoDropDownList({
+            dataTextField: "algorithmURI.value.slice(79)",
+            dataValueField: "algorithmURI.value",
+            autoBind: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        dataType: "jsonp",
+                        //Algorithm query URL
+						url: algorithmURI
+					}
+				},
+				schema: {
+					data: "results.bindings"
+				}               
+            },
+			optionLabel: { "algorithmURI": {"value": "http://visko.cybershare.utep.edu/linked-data/lifemapper/parameter-descriptions/---------------- please select ----------------"}},	
+            change: function() {
+				//Get selected Algorithm
+                var value = this.value();
+                //Populate grid with paramDatasource filtered by comparing the selected algorithm and algorithmName value in paramGridURL
+				if (value) {
+					$("#parameterGrid").data("kendoGrid").setDataSource(paramDataSource);
+                    paramGrid.data("kendoGrid").dataSource.filter({ field: "algorithmURI.value", operator: "eq", value: value });
+				} else {
+                    paramGrid.data("kendoGrid").dataSource.filter({});
+                }
+            }
+        });
+	});
+
+	
+	/*SPECIES AUTOCOMPLETE COMBOBOX*/
+	
+	$("#species").kendoComboBox({
+			dataTextField: "name.value",
+			enabled: true,
+			autoBind: false,
+			dataSource: {
+				transport: {
+					read: {
+						dataType: "jsonp", //Binding remote date
+						url: speciesURL 
+					}
+				},
+				schema: {
+					data: "results.bindings"
+				}               
+			},
+			placeholder: "-- start typing to find species --",
+			select: function(e) {		
+				selectedSpecies = JSON.stringify(this.dataItem(e.item.index()).name.value);
+				kendoConsole.log("Selected species :: " + selectedSpecies);
+
+			}
+		});
+
+
+	
+	/* MODEL SECTION AND OUTPUT */
+	
+	//Global User ID generator function
+	function guidGenerator() {
+		var S4 = function() {
+			return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+		};
+		return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+	}
+	
+				
+	
+	
+	//This is a callback function that gets with species occurrenceID request.
+	/*function getOccurrenceID(callback){ 
+		$.ajax({
+			type: "GET",
+			url: sOccurrenceURL, 
+			async: false,	
+			dataType: "jsonp",  
+			success: function(data) { 
+				kendoConsole.log("SPECIES OCCURRENCE")
+				kendoConsole.log("Waiting for request...")
+				kendoConsole.log("Occurrence Id returned :: " + (JSON.stringify(data.results.bindings[0].id.value)));
+				if (typeof callback=="function") return callback(data);
+			}			
+		});
+	}
+
+	getID(function(speciesOccurrenceID) {
+		var occ = JSON.stringify(speciesOccurrenceID.results.bindings[0].id.value)
+		//alert(occ);
+		return occ;
+	});
+	*/	
+	var sOccurrenceURL = url + "prefix+lifemapper%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-lifemapper.owl%23%3E%0D%0Aprefix+data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0A%0D%0Aselect+%3Fid%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Flifemapper%2Foccurrences%2Fspecies-occurrences.owl%3E%0D%0Awhere%7B%0D%0A%3Fdataset+a+lifemapper%3ASpeciesOccurrenceDataset.%0D%0A%3Fdataset+data%3AhasLayer+%3Flayer.%0D%0A%3Fdataset+data%3AhasManifestation+%3Fmanif.%0D%0A%3Fmanif+data%3AhasFileDownloadURL+%3FfileURL.%0D%0A%3Fmanif+data%3AhasLandingPageURL+%3FmetadataURL.%0D%0A%3Flayer+data%3AcontainsFeatureSet+%3Fset.%0D%0A%3Fset+a+lifemapper%3ASpeciesOccurrenceSet.%0D%0A%3Fset+lifemapper%3AhasOccurrenceSetID+%3Fid.%0D%0A%3Fset+lifemapper%3AhasOccurrenceOfSpecies+%3Fspecies.%0D%0A%3Fspecies+lifemapper%3AhasGenusName+%22" + window.selectedSpecies + "%22%5E%5E%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23string%3E.%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+	var getSpeciesID = function(){
+		return $.get(sOccurrenceURL, null, null, 'jsonp');
+	}
+	
+	var getAlgorithmJSON = 	function(){
+		var parameterJSONStr = new Array(); 
+		var algItems = $("#parameterGrid").data("kendoGrid").dataSource.view();
+		var selectedAlgorithm = algItems[1].algorithmURI.value.slice(79);
+		kendoConsole.log("Selected Algorithm :: " + algItems[1].algorithmURI.value.slice(79));
+			
+		for (i = 0; i < algItems.length; i++) {		
+			        kendoConsole.log("READING PARAMETER DATA...");
+					kendoConsole.log("Getting parameter name :: " + algItems[i].paramName.value);
+					kendoConsole.log("Getting parameter value :: " + algItems[i].default.value);
+					kendoConsole.log("Getting parameter datatype :: " + algItems[i].datatype.value);
+					parameterJSONStr[0] +=	'{"name": "' +  algItems[i].paramName.value + '", "value": "' + algItems[i].default.value + '", "datatype": "' + algItems[i].datatype.value.slice(33) + '"},';
+					kendoConsole.log("Parameter JSON::" + parameterJSONStr[0]);
+			}
+			kendoConsole.log("Parameter JSON::" + parameterJSONStr[0]);
+			
+		
+		var pIndex = parameterJSONStr[0].lenth-1;
+		
+		return (',"algorithm": {"id": "' + selectedAlgorithm + '","parameterBindings": [' + parameterJSONStr[0].substring(0, pIndex)  + ']},');	
+	}
+	
+		
+		
+	
+	//Get all the user selected values from species, data, and algorithm sections.
+	//Get selected values from data grid by iterating through all the rows. Use each row's group of values to get a corresponding dataset URI through a AJAX request. 
+	//Put
+	var getDataSetJSON = function() {
+		var sDate, eDate, entitySel, entStr, eInd, characSel, charStr, cInd, sourceSel, souStr, sInd;
+		var sDateA = new Array();
+		var eDateA = new Array();
+		var entA = new Array();
+		var charA = new Array();
+		var souA = new Array();
+		var modelDataSets = new Array();
+
+		var items = $("#grid").data("kendoGrid").dataSource.data();
+			for (i = 0; i < items.length; i++) {
+				//Get start date values from each row and store in an array
+				sDate = (JSON.stringify(items[i].start).substr(1,10));
+				sDateA[i] = sDate;
+				//Get end date values from each row and store in an array
+				eDate = (JSON.stringify(items[i].end)).substr(1,10);
+				eDateA[i] = eDate;
+				//Get entity values from each row and and store in an array
+				entStr = JSON.stringify(items[i].entity);
+				eInd = entStr.length - 2;  //to remove commas
+				entitySel = entStr.substr(1,eInd);
+				entA[i] = entitySel;  
+				//Get characteristic values from each row and and store in an array
+				charStr = JSON.stringify(items[i].characteristic);
+				cInd = charStr.length - 2;	
+				characSel = charStr.substr(1,cInd);
+				charA[i] = characSel;
+				//Get source values from each row and and store in an array
+				souStr = JSON.stringify(items[i].source);
+				sInd = souStr.length - 2;
+				sourceSel =  souStr.substr(1,sInd);
+				souA[i] = sourceSel;
+				
+				//Print each value in model console		
+				kendoConsole.log("READING ROW #" + (i + 1))
+				kendoConsole.log("Getting selected start date :: " + sDateA[i] );
+				kendoConsole.log("Getting selected end date :: " + eDateA[i] );
+				kendoConsole.log("Getting selected entity :: " + entA[i]);
+				kendoConsole.log("Getting selected characteristic :: " + charA[i]);
+				kendoConsole.log("Getting selected source :: " + souA[i]);
+				kendoConsole.log("DATA SET #" + (i+1) + " COMPLETED" );
+						
+
+				$(".title").html("WAITING ON MODEL RESPONSE STAGE");
+				kendoConsole.log("MODEL RESPONSE...");				
+				$(".title").html("MODEL SUBMISSION STAGE");	
+				
+				//Get datasets and store them in array
+				var datasetURL = url + "define+input%3Ainference+%22http%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Fmappings%2Felseweb-mappings.owl%22%0D%0Aprefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+provo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0A%0D%0Aselect+distinct+%3Fdataset%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
+						+ west[0] +
+						"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
+						+ east[0] +
+						"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
+						+ south[0] +
+						"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
+						+ north[0] +
+						"%29%0D%0A%0D%0A%3Fdataset+elseweb-data%3AcoversTimePeriod+%3Fperiod.%0D%0A%3Fperiod+elseweb-data%3AhasStartDate+%3FstartDate.%0D%0A%3Fperiod+elseweb-data%3AhasEndDate+%3FendDate.%0D%0A%0D%0A%3FstartDate+elseweb-data%3AhasDateTime+%3FsDate.%0D%0A%3FendDate+elseweb-data%3AhasDateTime+%3FeDate.%0D%0A%0D%0Afilter%28%3FsDate+%3E%3D+%22"
+						+ sDateA[i] + 
+						"-00%3A00%22%5E%5Exsd%3AdateTime%29%0D%0Afilter%28%3FeDate+%3C%3D+%22"
+						+ eDateA[i] + 
+						"-00%3A00%22%5E%5Exsd%3AdateTime%29+%0D%0A%0D%0A%3Fdataset+elseweb-data%3AhasDataBand+%3Fband.%0D%0A%3Fband+elseweb-data%3ArepresentsEntity+%3Chttp%3A%2F%2Fvisko.cybershare.utep.edu%2Flinked-data%2Fedac%2Fservices%2F"
+						+ entA[i] + 
+						"%3E.%0D%0A%3Fband+elseweb-data%3AencodingOfCharacteristic+%3Chttp%3A%2F%2Fvisko.cybershare.utep.edu%2Flinked-data%2Fedac%2Fservices%2F"
+						+ charA[i] + 
+						"%3E.%0D%0A%3Fband+provo%3AwasGeneratedBy+%3Factivity.%0D%0A%3Factivity+provo%3AwasAssociatedWith+%3Chttp%3A%2F%2Fvisko.cybershare.utep.edu%2Flinked-data%2Fedac%2Fservices%2F" 
+						+ souA[i] + 
+						"%3E%0D%0A%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
+
+
+				//Dataset query request with selected data. 
+				$.ajax({
+					type: "GET",
+					url: datasetURL,  
+					dataType: "jsonp",  
+					success: function(data) { 
+						if((data.results.bindings[0].dataset.value == "") || (data.results.bindings[0].dataset.value == 'undefined' )){
+							alert("No datasets match criteria. Change values.")
+							kendoConsole.log("No datasets match criteria. Change values.");
+						}
+						else{
+							kendoConsole.log("SENDING DATA SET QUERY...")
+							kendoConsole.log("Waiting for dataset...")
+							kendoConsole.log("Dataset :: " + (JSON.stringify(data.results.bindings[0].dataset.value)));
+							modelDataSets[i] = JSON.stringify(data.results.bindings[0].dataset.value);
+							kendoConsole.log("1 SCOPE TEST datasetURI:: " + modelDataSets[i]);
+							modelingScenarioJSONStr[0] += '"datasetURI": "' + modelDataSets[i] + '"},'; 
+							kendoConsole.log("1 SCOPE TEST datasetURI JSON Str:: " + modelingScenarioJSONStr[0]);
+							
+						}			
+					}	  
+				});	
+			}
+			
+		kendoConsole.log("2 SCOPE TEST datasetURI JSON Str:: " + modelingScenarioJSONStr[0]);
+		var mIndex = modelingScenarioJSONStr[0].lenth-1;
+		return ( '"modelingScenario": [' + modelingScenarioJSONStr[0].substring(0, mIndex) + ']}}');	
+	}
+				
+
+	var getJSONSpec = function(){
+		//Create jsonSpec for request	
+		var jsonSpec = '{"specification": {"id": "' +  guidGenerator() + '","occurrenceDataID": ' + getSpeciesID + getAlgorithmJSON + getDataSetJSON;
+		
+		kendoConsole.log("JSON:: " + jsonSpec);
+		return jsonSpec;
+	}
+	
+	function getExperiment(){			
+		//For testing purposes
+		var jsonSpec2 = '{"specification": {' + 
+		'"id": "d046d1fa-98cc-4705-b44d-884c263bbcfa",' +
+		'"occurrenceDataID": "1032789",' +
+		'"algorithm": {' +
+			'"id": "ANN",' +
+			'"parameterBindings": [' +
+				'{"name": "Choice", "value": "1", "datatype": "integer"},' +
+				'{"name": "Epoch", "value": "5000000", "datatype": "integer"},' +
+				'{"name": "HiddenLayerNeurons", "value": "14", "datatype": "integer"},' +
+				'{"name": "LearningRate", "value": "0.3", "datatype": "double"},' +
+				'{"name": "MinimumError", "value": "0.01", "datatype": "double"},' +
+				'{"name": "Momentum", "value": "0.05", "datatype": "double"}' +         
+				']' +
+		'},' +
+		'"modelingScenario": [' +
+			'{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348880"},' +
+			'{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348881"},' +
+			'{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348882"},' + 
+			'{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348883"},' +
+			'{"datasetURI": "http://visko.cybershare.utep.edu/linked-data/edac/services/dataset_348884"}' +
+			']' +
+		'}' +
+	'}';
+
+		var serviceURL = 'http://visko.cybershare.utep.edu/elseweb-endpoint/JSONSpecification?jsonSpec=' + jsonSpec2;
+	
+		//Lifemapper experiment request
+		var expURL;
+		var xmlhttp;
+		if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else{// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				expURL = xmlhttp.responseText.substr(205, 54);
+				kendoConsole.log("Lifemapper experiment URL :: " + expURL); 
+				document.getElementById("urlText").innerHTML=expURL;  //Not posting inside textbox only in other html elements and kendoConsole
+				$(".title").html("LIFEMAPPER EXPERIMENT URL");
+				
+			}
+		}
+		xmlhttp.open("POST",serviceURL,true);
+		xmlhttp.send();
+	}
+	
+    </script>
+	
+    <style scoped>
+        #progressBar {
+            width: 390px;
+            margin-bottom: 10px;
+        }
+        .demo-section {
+            width: 470px;
+            text-align: center;
+        }
+        .console {
+			height: 200px;
+            margin: 0;
+        }
+		
+        #left-pane, #center-pane, #right-pane  { 
+			background-color: rgba(60, 70, 80, 0.05);
+		}
+    </style> 
+
+	
+			
+</body>
+</html>

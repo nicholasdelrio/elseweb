@@ -11,7 +11,7 @@ from rdflib import *
 from rdflib.resource import Resource as RDFLibResource
 
 from lmSADIUtils.ClientTools import LifemapperClient
-from lmSADIUtils.Namespace import LM, DATA
+from lmSADIUtils.Namespace import LM, DATA, MD
 from lmSADIUtils.URI import ResourceURI
 
 class ExperimentPosterService(sadi.Service):
@@ -47,11 +47,21 @@ class ExperimentPosterService(sadi.Service):
         algorithm = input.value(LM.specifiesModellingAlgorithm)
         algorithmCode = algorithm.value(LM.hasAlgorithmCode)
 
+        # Extract Parameter Bindings
+        params = algorithm.value(MD.behaviorControlledBy)
+        
+        bindings = []
+        for param in params[MD.hasParameterMember]:
+            name = param.value(MD.hasParameterName)
+            value = param.value(MD.boundToValue)
+            bindings[name] = value
+        
+
         # Extract OccurrenceSetID
         occurrenceSet = input.value(LM.specifiesOccurrenceSet)
         occurrenceSetID = occurrenceSet.value(LM.hasOccurrenceSetID)
 
-        lmClient.postExperiment(algorithmCode, occurrenceSetID, scenarioID)
+        lmClient.postExperiment(algorithmCode, bindings, occurrenceSetID, scenarioID)
         #resultURL = "http://somedomain.com/testURL"
         
         #get experimentURL and id

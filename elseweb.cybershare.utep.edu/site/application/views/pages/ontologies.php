@@ -1,14 +1,11 @@
     <!--container start-->
     <div class="container">
         <div class="row">
-            <div class="col-lg-5">
-                 <img width="470" src="<?php echo base_url(IMAGES."layered-ontologies.png");?>" alt="text img">
-            </div>
-            <div class="col-lg-7 about">
-                <h3>A Multitier Ontology Driven Infrastructure</h3>
-                <p>Although ELSEWeb currently enables the transference of EDAC data to Lifemapper, we ultimately want to connect with other data and model providers. To accommodate for these expansions, we have devised a multitier ontology driven infrastructure that allows third-party providers to align with our ontologies and therefore be incorporated with our system.</p>
-                <p>The first tier of our ontology consists of prevalent Linked 0pen Data (LOD) ontologies that, in addition to providing a community driven structure to our data, allows other semantic applications to easily consume our RDF. The second tier expands on LOD ontologies and provides specific concepts for describing data provider sources and modeling services. The third tier is where the domain specific data and model providers would align with our generic ontologies, and provide classes and properties specific to their domain. Finally, the transformation tier provides a link between a specific data and model provider. SADI services leverage the transformation ontology to automatically transform source data into forms a specific modeling agent can process.</p>
-            </div>
+            <h3>A Multitier Ontology Driven Infrastructure</h3>
+            <p>Although ELSEWeb currently enables the transference of EDAC data to Lifemapper, we ultimately want to connect with other data and model providers. To accommodate for these expansions, we have devised a multitier ontology driven infrastructure that allows third-party providers to align with our ontologies and therefore be incorporated with our system.</p>
+            <p>The first tier of our ontology consists of prevalent Linked 0pen Data (LOD) ontologies that, in addition to providing a community driven structure to our data, allows other semantic applications to easily consume our RDF. The second tier expands on LOD ontologies and provides specific concepts for describing data provider sources and modeling services. The third tier is where the domain specific data and model providers would align with our generic ontologies, and provide classes and properties specific to their domain. Finally, the transformation tier provides a link between a specific data and model provider. SADI services leverage the transformation ontology to automatically transform source data into forms a specific modeling agent can process.</p>
+
+            <img width="800" src="<?php echo base_url(IMAGES."layered-ontologies.png");?>" alt="text img">
         </div>
 
         <div class="row">

@@ -66,7 +66,7 @@ class LifemapperClient:
         self.scenarioURL = self.scenarioBaseURL + postedScenario.id
         
         
-    def postExperiment(self, algorithm, occurrenceSetID, scenarioID):
+    def postExperiment(self, algorithm, params, occurrenceSetID, scenarioID):
 
         mdlScn = scenarioID
         prjScns = [scenarioID]
@@ -75,6 +75,10 @@ class LifemapperClient:
         print("Projection ID %s" % prjScns)
         print("Algorithm %s" % algorithm)
         print "Chosen occurrence set ID %s" % occurrenceSetID
+
+        alg = self.lmClient.getAlgorithmFromCode(algorithm)
+        
+        for binding
 
         exp = self.lmClient.sdm.postExperiment(algorithm, mdlScn, occurrenceSetID, prjScns=prjScns)
 

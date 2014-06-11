@@ -15,11 +15,25 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCotZjhwqwQ-4UjBvZHJNrQK0Yew5M2sOQ&sensor=true"></script>  
 	
 
-    
-    
-</head>
-<body>
-    <div id="main-window" class="k-content"> 
+    <!-- NO ENTER -->
+	<!-- Code to avoid reloading the page when user clicks enter -->
+	<script>
+		function noEnter() {
+			return !(window.event && window.event.keyCode == 13); 
+		}
+	
+
+		function enter(nextfield) {
+			if(window.event && window.event.keyCode == 13) {
+				nextfield.focus();
+				return false; 
+			}
+			else
+				return true; 
+		}
+	</script>
+	
+	    <div id="main-window" class="k-content"> 
 		<div id="window">
 		 <div id="horizontal" style="height: 100%; width: 100%;">
 				
@@ -102,25 +116,9 @@
 		</div>			
 	</div>	
 	
-	
-	
-	<!-- NO ENTER -->
-	<!-- Code to avoid reloading the page when user clicks enter -->
-	<script type="text/javascript">
-		function noEnter() {
-			return !(window.event && window.event.keyCode == 13); 
-		}
-	
-
-		function enter(nextfield) {
-			if(window.event && window.event.keyCode == 13) {
-				nextfield.focus();
-				return false; 
-			}
-			else
-				return true; 
-		}
-	</script>	
+    
+</head>
+<body>	
 
 	<!-- PARAMETER GRID -->	
 	<!-- Adds algorithm toolbar and dropdownlist to parameter's grid -->
@@ -135,7 +133,10 @@
 	/* "Global" variable definition */
 	var rectangle, map, infoWindow, infoWindowBox;
 	var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(0, 0), new google.maps.LatLng(0, 0)); 
-	var north, east, south, west;
+	var north = [];
+	var east = [];
+	var south = [];
+	var west = [];
 	var url = "http://visko.cybershare.utep.edu/sparql?default-graph-uri=&query=";
 	var sw, ne, nw, se;
 	var userBounds, boundsArray;
@@ -282,45 +283,45 @@
 		sw = rectangle.getBounds().getSouthWest();
 		nw = new google.maps.LatLng(ne.lat(), sw.lng());
 		se = new google.maps.LatLng(sw.lat(), ne.lng());
-		north = ne.lat();
-		east = ne.lng();
-		south = sw.lat();
-		west =	sw.lng();
+		north[0] = ne.lat();
+		east[0] = ne.lng();
+		south[0] = sw.lat();
+		west[0] =	sw.lng();
 		
-		var contentString = 'NE: ' + north + ', ' + east + '<br>' + 'SW: ' + south + ', ' + west;
-		var textboxString = north + ', ' + east + ', ' + south + ', ' + west;
+		var contentString = 'NE: ' + north[0] + ', ' + east[0] + '<br>' + 'SW: ' + south[0] + ', ' + west[0];
+		var textboxString = north[0] + ', ' + east[0] + ', ' + south[0] + ', ' + west[0];
 
 		
 		entURL = url + "prefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aselect+distinct+%3Fentity%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0Afilter%28%3Fllon+%3C%3D+"
-					+ west + 
+					+ west[0] + 
 					"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
-					+ east + 
+					+ east[0] + 
 					"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
-					+ south +
+					+ south[0] +
 					"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
-					+ north + 
+					+ north[0] + 
 					"%29%0D%0A%3Fdataset+elseweb-data%3AhasDataBand+%3Fband.%0D%0A%3Fband+elseweb-data%3ArepresentsEntity+%3Fentity.%0D%0A%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
 			
 		//Define charURL and sourceURL here to use coordinate variables 
 		//TODO: Check variable scope
 		charURL = url + "prefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aselect+distinct+%3Fchar%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
-					+ west +
+					+ west[0] +
 					"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
-					+ east +
+					+ east[0] +
 					"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
-					+ south +
+					+ south[0] +
 					"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
-					+ north +
+					+ north[0] +
 					"%29%0D%0A%0D%0A%3Fdataset+elseweb-data%3AhasDataBand+%3Fband.%0D%0A%3Fband+elseweb-data%3AencodingOfCharacteristic+%3Fchar%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
 		
-		sourceURL = url + "define+input%3Ainference+%22http%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Fmappings%2Felseweb-edac-mappings.owl%22%0D%0Aprefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+provo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0Aselect+distinct+%3Fsource%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
-					+ west +
+		sourceURL = url + "define+input%3Ainference+%22http%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Fmappings%2Felseweb-mappings.owl%22%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+provo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0Aselect+distinct+%3Fsource%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
+					+ west[0] +
 					"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
-					+ east +
+					+ east[0] +
 					"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
-					+ south +
+					+ south[0] +
 					"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
-					+ north +
+					+ north[0] +
 					"%29%0D%0A%0D%0A%3Fdataset+elseweb-data%3AhasDataBand+%3Fband.%0D%0A%3Fband+provo%3AwasGeneratedBy+%3Factivity.%0D%0A%3Factivity+provo%3AwasAssociatedWith+%3Fsource%0D%0A%7D%0D%0A&format=application%2Fjson&timeout=0&debug=on&callback?";
 	
 			
@@ -511,9 +512,6 @@
     });	
 
 
-
-    	
-	
 	/* SPECIES */	
 	//Species file upload
 	//File Upload documentation: http://demos.telerik.com/kendo-ui/web/upload/index.html 
@@ -528,8 +526,6 @@
 		});
     });
 		
-
-	
 	
     /* PARAMETER GRID */
 	var maximos = "maximos.value";
@@ -634,9 +630,6 @@
 		});
 
 
-    
-
-	
 	
 	/* MODEL SECTION AND OUTPUT */
 	
@@ -673,6 +666,9 @@
 		return occ;
 	});
 	*/	
+	
+
+	
 		var modelingScenarioJSONStr;
 		var parameterJSONStr; 
 	
@@ -728,14 +724,14 @@
 				$(".title").html("MODEL SUBMISSION STAGE");	
 				
 				//Get datasets and store them in array
-				var datasetURL = url + "define+input%3Ainference+%22http%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Fmappings%2Felseweb-edac-mappings.owl%22%0D%0Aprefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+provo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0A%0D%0Aselect+distinct+%3Fdataset%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
-						+ "-123.05" + 
-						"%29%0D%0Afilter%28%3Frlon+%3E%3D+" 
-						+ "-80.19" + 
+				var datasetURL = url + "define+input%3Ainference+%22http%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Fmappings%2Felseweb-mappings.owl%22%0D%0Aprefix+elseweb-data%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-data.owl%23%3E%0D%0Aprefix+elseweb-edac%3A+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Felseweb-edac.owl%23%3E%0D%0Aprefix+provo%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0A%0D%0Aselect+distinct+%3Fdataset%0D%0Afrom+%3Chttp%3A%2F%2Fontology.cybershare.utep.edu%2FELSEWeb%2Flinked-data%2Fedac%2Fservices%2Fwcs-services.owl%3E%0D%0Awhere%0D%0A%7B%0D%0A%3Fdataset+elseweb-data%3AcoversRegion+%3Fregion.%0D%0A%3Fregion+elseweb-data%3AhasLeftLongitude+%3Fllon.%0D%0A%3Fregion+elseweb-data%3AhasRightLongitude+%3Frlon.%0D%0A%3Fregion+elseweb-data%3AhasLowerLatitude+%3Fllat.%0D%0A%3Fregion+elseweb-data%3AhasUpperLatitude+%3Fulat.%0D%0A%0D%0Afilter%28%3Fllon+%3C%3D+"
+						+ west[0] +
+						"%29%0D%0Afilter%28%3Frlon+%3E%3D+"
+						+ east[0] +
 						"%29%0D%0Afilter%28%3Fllat+%3C%3D+"
-						+ "24.20" + 
-						"%29%0D%0Afilter%28%3Fulat+%3E%3D+" 
-						+ "49.03" + 
+						+ south[0] +
+						"%29%0D%0Afilter%28%3Fulat+%3E%3D+"
+						+ north[0] +
 						"%29%0D%0A%0D%0A%3Fdataset+elseweb-data%3AcoversTimePeriod+%3Fperiod.%0D%0A%3Fperiod+elseweb-data%3AhasStartDate+%3FstartDate.%0D%0A%3Fperiod+elseweb-data%3AhasEndDate+%3FendDate.%0D%0A%0D%0A%3FstartDate+elseweb-data%3AhasDateTime+%3FsDate.%0D%0A%3FendDate+elseweb-data%3AhasDateTime+%3FeDate.%0D%0A%0D%0Afilter%28%3FsDate+%3E%3D+%22"
 						+ sDateA[i] + 
 						"-00%3A00%22%5E%5Exsd%3AdateTime%29%0D%0Afilter%28%3FeDate+%3C%3D+%22"
@@ -850,10 +846,8 @@
 		}
 		xmlhttp.open("POST",serviceURL,true);
 		xmlhttp.send();
-	}		
-
+	}
 	
-
     </script>
 	
     <style scoped>

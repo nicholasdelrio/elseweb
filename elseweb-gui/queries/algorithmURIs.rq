@@ -1,9 +1,0 @@
-prefix modelling: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-modelling.owl#>
-prefix parameters: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-lifemapper-parameters.owl#>
-prefix lifemapper: <http://ontology.cybershare.utep.edu/ELSEWeb/elseweb-lifemapper.owl#>
-
-select distinct ?algorithmURI
-
-from <http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/parameter-descriptions/parameter-descriptions.owl>
-where
-{?algorithmURI a lifemapper:LifemapperAlgorithm.}
