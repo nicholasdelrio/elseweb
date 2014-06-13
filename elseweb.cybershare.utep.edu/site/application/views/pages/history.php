@@ -30,15 +30,35 @@
                          echo "<td>".$row['Etimestamp']."</td>";
                          echo "<td style='text-align:center;'>".$row['Estatus']."</td>";
                          echo "<td><a href='".$row['EresultURL']."'>".$row['EresultURL']."</a></td>";
-                         echo "<td style='text-align:center;'><button type='button' class='btn btn-purchase btn-xs'><span class='glyphicon glyphicon-align-justify'></span></button></td>";
+                    ?>
+                         <td style='text-align:center;'><button type='button' class='btn btn-purchase btn-xs' onClick='experimentDetails("history", "<?php echo $row['Eid']?>")'><span class='glyphicon glyphicon-align-justify'></span></button></td>
+                    <?php
                          echo "</tr>";
                       }
                     ?>
                 </tbody>
             </table>
         </div>
-    </div>    
-         
+    </div> 
+    
+    <!-- Modal -->
+   <div class="modal fade" id="modalDetails" tabindex="-1" role="dialog" aria-labelledby="Experiment Details" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+           <h4 class="modal-title" id="myModalLabel">Experiment Details</h4>
+         </div>
+         <div class="modal-body" id="expDetails">
+           Experiment content here
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+       </div>
+     </div>
+   </div>   
+
          
     
         

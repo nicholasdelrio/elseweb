@@ -1839,8 +1839,6 @@ ul#filters > .active > span {
     margin-bottom: 50px;
 }
 
-
-
 /* Custom addons */
 
 .btn-purchase{
@@ -1854,4 +1852,10 @@ ul#filters > .active > span {
 
 .info-paragraph-b{
     margin-bottom: 20px;
+}
+
+/* Modal Window Title Background */
+
+.modal-header {
+    background: #FF4900;
 }
