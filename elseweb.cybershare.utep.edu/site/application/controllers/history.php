@@ -41,9 +41,12 @@ class History extends MY_Controller{
             
             //Append experiment parameters (name and value)
             $parameters = $this->history_model->getExperimentParameters($Eid);
+            $i = 0;
             foreach ($parameters as $row){
-                $json['specification']['algorithm']['parameterBindings'][]['name'] = $row->Pname_FK;
-                $json['specification']['algorithm']['parameterBindings'][]['value'] = $row->Pvalue; 
+                $json['specification']['algorithm']['parameterBindings'][$i]['name'] = $row->Pname_FK;
+                $json['specification']['algorithm']['parameterBindings'][$i]['value'] = $row->Pvalue; 
+                $i++;
+
             }
             
             //Append Environment URIs
