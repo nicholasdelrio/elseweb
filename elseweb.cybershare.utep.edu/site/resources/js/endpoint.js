@@ -121,7 +121,7 @@ function storeExperiment(experiment_json, base_url){
                     html += "<a href='endpoint'><button type='button' class='btn btn-purchase'>New Experiment</button></a>";
                     html += "</div>";
                     html += "<div class='text-center col-md-4'>";
-                    html += "<a href=''><button type='button' class='btn btn-default'>Experiment History</button></a>";
+                    html += "<a href='history'><button type='button' class='btn btn-default'>Experiment History</button></a>";
                     html += "</div>";
                     html += "</div>";
                     html += "</div>";

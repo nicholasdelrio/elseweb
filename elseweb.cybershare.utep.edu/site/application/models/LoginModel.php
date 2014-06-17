@@ -1,24 +1,45 @@
 <?php  defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* File: LoginModel.php
+ * Author: Luis Garnica
+ * View Dependant: login, register
+ * Description: This class user login to the elseweb website and user registration. 
+ *  
+ *  */
+
 class LoginModel extends CI_Model {
     
     public function __construct() {
         parent::__construct();
     }
     
+    
+   /*
+    * Function: login_user
+    * Description: Receives input of username and password, checks combination against the
+    *              database and returns a user row if successful.
+    * */
+    
     public function login_user($username,$password)
     {
         $this->db->where('Uusername',$username);
         $this->db->where('Upassword',$password);
-        $query = $this->db->get('USER');
+        $query = $this->db->get('USER'); //Table name USER
         if($query->num_rows() == 1)
         {
             return $query->row();
         }else{
-            $this->session->set_flashdata('incorrect_user','Invalid user/password combination');
-            echo "Invalid user/password combination";
+            $this->session->set_flashdata('incorrect_user','Invalid user/password combination'); //Used for error reporting
+            echo "Invalid user/password combination"; //Response to ajax
         }
     }
+    
+    
+   /*
+    * Function: add_user
+    * Description: Inserts user registration data into DB, discipline and organization
+    *              are tables are checked in order to prevent data repetition.
+    * */
     
     
     public function add_user($username,$password, $email, $discipline, $organization)
@@ -86,9 +107,15 @@ class LoginModel extends CI_Model {
        else{
            return false;
        }
-    
-       
+   
     }
+    
+    
+   /*
+    * Function: checkExistance
+    * Description: Checks if received value exists on the designated column and table,
+    *              returns false if the value is not found.
+    * */
     
     private function checkExistance ($tablename, $columnname, $value){
         $this->db->select('*');
@@ -106,4 +133,5 @@ class LoginModel extends CI_Model {
     }
     
 }
+
 ?>

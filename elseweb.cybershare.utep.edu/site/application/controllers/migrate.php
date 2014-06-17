@@ -1,5 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* File: migrate.php (controller)
+ * Author: Luis Garnica
+ * View Dependant: none
+ * Description: Migrate database to the version set on config/migration.php
+ *  */
+
 class Migrate extends CI_Controller{
     
    public function index(){ 

@@ -1,14 +1,15 @@
-<?php  //defined('BASEPATH') OR exit('No direct script access allowed');
+<?php  defined('BASEPATH') OR exit('No direct script access allowed');
+
+/* File: history.php (controller)
+ * Author: Luis Garnica
+ * View Dependant: history
+ * Description: Renders experiment history page and fetches experiment details to
+ *              be viewed by an ajax request.
+ *  */
+
 
 class History extends MY_Controller{
-    
-       //public function __construct()
-      // {
-       // parent::__construct();
-		
-       //}
-    
-      
+          
 	public function index($renderData=""){	
             $this->load->model('history_model');
             $this->data['experiment'] = $this->history_model->getUserExperimentList();   
@@ -29,6 +30,12 @@ class History extends MY_Controller{
   
         }
         
+         /*
+          * Function: getExperimentDetails
+          * Description: Fetches experiment detailed information by receiving the experiment id.
+          *              Data is constructed into a json response.
+          * */   
+
         public function getExperimentDetails(){
             $this->load->model('history_model');
             $Eid = $this->input->post('Eid');

@@ -1,11 +1,24 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* File: experiment_model.php
+ * Author: Luis Garnica
+ * View Dependant: endpoint
+ * Description: Stores Experiment information received as a JSON formated string.
+ *  
+ *  */
+
 class Experiment_model extends CI_Model {
     
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
     }
+    
+   /*
+    * Function: store_experiment
+    * Description: Fetches needed experiment information for local storage on a relational database.
+    *              Experiment data is receives as a decoded json variable.
+    * */
     
     public function store_experiment($decoded_json){
         
@@ -82,7 +95,7 @@ class Experiment_model extends CI_Model {
             return false;
       }
        
-       if ($this->db->trans_status() == TRUE && $Estatus === "true" ){
+       if ($this->db->trans_status() == TRUE && $Estatus === "true" ){ //sucessful transaction and experiment
            return true;
        }
        else{
@@ -90,6 +103,12 @@ class Experiment_model extends CI_Model {
        }
                  
     }
+    
+   /*
+    * Function: checkExistance
+    * Description: Checks if received value exists on the designated column and table,
+    *              returns false if the value is not found.
+    * */
     
     private function checkExistance ($tablename, $columnname, $value){
         $this->db->select('*');

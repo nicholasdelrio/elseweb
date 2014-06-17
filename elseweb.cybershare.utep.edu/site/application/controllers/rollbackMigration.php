@@ -1,5 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* File: rollbackMigration.php (controller)
+ * Author: Luis Garnica
+ * View Dependant: none
+ * Description: Rollback database to version set on version(param)
+ *  */
+
 class RollbackMigration extends CI_Controller{
     
    public function index(){ 
