@@ -153,7 +153,6 @@ p {line-height: 22px}
 }
 
 .dropdown-menu  {
-   min-width: 390px;
    top: 75%;
 }  
  
@@ -239,7 +238,7 @@ p {line-height: 22px}
 /*homepage features*/
 
 .feature-head {
-    padding: 50px 0;
+    padding: 40px 0;
 }
 
 .feature-head h1{
@@ -1838,4 +1837,25 @@ ul#filters > .active > span {
 
 .mbot50 {
     margin-bottom: 50px;
+}
+
+/* Custom addons */
+
+.btn-purchase{
+    background: #FF4900;
+    color: #ffffff;
+}
+
+.info-paragraph{
+    margin-top: 20px;
+}
+
+.info-paragraph-b{
+    margin-bottom: 20px;
+}
+
+/* Modal Window Title Background */
+
+.modal-header {
+    background: #FF4900;
 }

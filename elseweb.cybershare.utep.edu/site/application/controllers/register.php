@@ -1,4 +1,10 @@
-<?php //defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+/* File: register.php (controller)
+ * Author: Luis Garnica
+ * View Dependant: register
+ * Description: Render registration page and handles dynamic hint inputs on the form.
+ *  */
 
 class Register extends MY_Controller{
     

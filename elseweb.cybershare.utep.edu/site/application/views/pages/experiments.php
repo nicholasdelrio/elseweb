@@ -33,8 +33,8 @@
             <div class="col-lg-6 col-sm-6">
                 <div class="content">
                     <h3 class="title">Option 2: Experiment Endpoint Service</h3>
-                    <p>The Experiment Interface presented above captures users selection in the form of an <a href="http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json">ELSEWeb experiment specification</a>. These specifications are posted to an underlying <a href=”http://visko.cybershare.utep.edu/elseweb-endpoint/”>HTTP POST service</a>. Power users can generate their own JSON specifications and submit them to the service through the input text box or submit specifications programmatically.</p>
-                    <a href="<?php echo ENDPOINT;?>" class="btn btn-purchase">Submit a Specification</a></p>
+                    <p>The Experiment Interface presented above captures users selection in the form of an <a href="http://ontology.cybershare.utep.edu/ELSEWeb/linked-data/lifemapper/experiments/specifications/json/sample-specification.json">ELSEWeb experiment specification</a>. These specifications are posted to an underlying <a href=”<?php echo site_url('endpoint') ?>”>HTTP POST service</a>. Power users can generate their own JSON specifications and submit them to the service through the input text box or submit specifications programmatically.</p>
+                    <a href="<?php echo site_url('endpoint') ?>" class="btn btn-purchase">Submit a Specification</a></p>
                 </div>
             </div>
             <div class="col-lg-6 col-sm-6">

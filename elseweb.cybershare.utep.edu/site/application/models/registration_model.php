@@ -1,7 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* File: registration_model.php
+ * Author: Luis Garnica
+ * View Dependant: register
+ * Description: Used for autohint inputs on the user registration form
+ *              methods are called from controller through ajax. Discipline and
+ *              Organization tables.
+ *  */
+
 class Registration_model extends CI_Model{
-  
+    
     function get_discipline($q){
     $this->db->select('Dname');
     $this->db->like('Dname', $q);

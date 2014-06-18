@@ -129,6 +129,8 @@ class Migration_Initial_schema extends CI_Migration{
         $this->dbforge->create_table('ALGORITHM');  
         echo "DONE<br/>";
         
+        /********************************************************************/
+        
         echo "Creating table 'EXPERIMENT'";
         $fields = array (
             'Eid' => array(
@@ -146,9 +148,10 @@ class Migration_Initial_schema extends CI_Migration{
             'Etimestamp' => array(
                 'type'=> 'TIMESTAMP'
             ),
-            'Eresult_id' => array(
-                'type' => 'INT',
-                'null' => TRUE
+            'EresultURL' => array(
+                'type' => 'VARCHAR',
+                'null' => TRUE,
+                'constraint' => '200'
             ),
             'Estatus' => array (
                 'type' => 'VARCHAR',
@@ -166,7 +169,8 @@ class Migration_Initial_schema extends CI_Migration{
             ),
             'EprovinenceID' => array (
                 'type' => 'VARCHAR',
-                'constraint' => '100'
+                'constraint' => '200',
+                'null' => TRUE
             )
         );
         $this->dbforge->add_field($fields);
@@ -302,6 +306,7 @@ class Migration_Initial_schema extends CI_Migration{
     
     
     public function down(){
+       $this->dbforge->drop_table('EXPERIMENT_DATASETS');
        $this->dbforge->drop_table('ENVIRONMENT');
        $this->dbforge->drop_table('COMMENT');
        $this->dbforge->drop_table('EXP_PARAMETERS');

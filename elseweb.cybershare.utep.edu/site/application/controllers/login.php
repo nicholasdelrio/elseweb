@@ -1,5 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* File: login.php (controller)
+ * Author: Luis Garnica
+ * View Dependant: login, register
+ * Description: Validates and handles user login and registration.
+ *  */
+
 class Login extends CI_Controller
 {
     public function __construct()
@@ -10,7 +16,15 @@ class Login extends CI_Controller
 		$this->load->helper(array('url','form'));
 		$this->load->database('default');
     }
-	
+
+   /*
+    * Function: new_user
+    * Description: Validates and sanitizes input from the login form.
+    *              With a correct user/password combination a session variable is set
+    *              containing a log in flag, username and priviledge level.
+    * Note: Priviledge level is currently hadcoded.
+    * */     
+    
     public function new_user(){
             $this->form_validation->set_rules('username', 'user name', 'required|trim|min_length[2]|max_length[150]|xss_clean');
             $this->form_validation->set_rules('password', 'password', 'required|trim|min_length[5]|max_length[150]|xss_clean');
@@ -35,6 +49,11 @@ class Login extends CI_Controller
 		
     }
     
+   /*
+    * Function: register
+    * Description: Validates user registration form and inserts the new user into the database.
+    * */   
+    
     public function register(){
         $this->form_validation->set_rules('username', 'User Name', 'required|trim|min_length[2]|max_length[20]|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[5]|max_length[20]|xss_clean');
@@ -50,8 +69,8 @@ class Login extends CI_Controller
                 echo validation_errors();
         }
         else{
-           $password = sha1($this->input->post('password'));
-           $pass_confirm = sha1($this->input->post('pass_confirm'));
+           $password = sha1($this->input->post('password')); //encrypted password in db
+           $pass_confirm = sha1($this->input->post('pass_confirm'));  //encrypted password in db
            if ($password == $pass_confirm){
                 $username = $this->input->post('username');
                 $email = $this->input->post('email');
@@ -72,16 +91,25 @@ class Login extends CI_Controller
         
     }
     
+   /*
+    * Function: token
+    * Description: Manual form token to prevent cross site login.
+    * Note: Not currently in use.
+    * */   
+    
      public function token(){
             $token = md5(uniqid(rand(),true));
             $this->session->set_userdata('token',$token);
             return $token;
      }
-	
+
+   /*
+    * Function: logout_ci
+    * Description: Destroys all session variables and resets to home page.
+    * */   
 	
     public function logout_ci(){
             $this->session->sess_destroy();
-            //$this->index();
             $url = site_url();
             header('Location: '.$url);
      }
